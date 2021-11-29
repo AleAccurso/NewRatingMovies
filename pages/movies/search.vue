@@ -57,7 +57,7 @@
         if (this.title !== ''){
           axios
             .post(
-                process.env._AXIOS_BASE_URL_ +
+                process.env.BASE_URL +
                 "/movies/search/" +
                 this.title.replace(" ", "+")
             )

@@ -96,7 +96,7 @@ const store = {
   actions: {
     async nuxtServerInit({ commit }) {
       const response = await this.$axios
-        .get(process.env._AXIOS_BASE_URL_ + "/movies")
+        .get(process.env.BASE_URL + "/movies")
         .then((response) => {
           commit("GET_MOVIES", response.data);
         });
@@ -105,7 +105,7 @@ const store = {
     //user
     getUsers({ commit }) {
       this.$axios
-        .get(process.env._AXIOS_BASE_URL_ + "/users")
+        .get(process.env.BASE_URL + "/users")
         .then((response) => {
           commit("GET_USERS", response.data);
         })
@@ -115,7 +115,7 @@ const store = {
     },
     deleteUser({ commit }, _id) {
       this.$axios
-        .delete(process.env._AXIOS_BASE_URL_ + "/user/delete/" + _id)
+        .delete(process.env.BASE_URL + "/user/delete/" + _id)
         .then((response) => {
           commit("DELETE_USER", response.data);
         });

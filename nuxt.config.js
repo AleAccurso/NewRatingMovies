@@ -85,13 +85,8 @@ export default {
     // '@nuxtjs/proxy',
     "@nuxtjs/axios",
     "@nuxtjs/auth-next",
+    "@nuxtjs/dotenv",
   ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    // proxy: true,
-    baseURL: process.env.BASE_URL || "http://localhost:8010/api",
-  },
 
   auth: {
     strategies: {

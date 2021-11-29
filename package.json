@@ -26,6 +26,7 @@
     "webpack": "^4.46.0"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "sass": "^1.43.5"
   }
 }

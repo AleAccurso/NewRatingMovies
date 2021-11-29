@@ -82,9 +82,9 @@
       },
 
       getInfo(filePath, fileToModify, movie){
-        console.log("getInfo path:" + process.env._AXIOS_BASE_URL_ + "/movies/" + movie.id + "/getInfo");
+        console.log("getInfo path:" + process.env.BASE_URL + "/movies/" + movie.id + "/getInfo");
         axios
-        .post(process.env._AXIOS_BASE_URL_ + "/movies/" + movie.id + "/getInfo")
+        .post(process.env.BASE_URL + "/movies/" + movie.id + "/getInfo")
         .then((response) => {
           this.selectedMovie = response.data;
           if(filePath === null){
@@ -115,7 +115,7 @@
           }
 
           axios
-          .post(process.env._AXIOS_BASE_URL_ + "/movies/" + info.movieDbId + "/metadata", {
+          .post(process.env.BASE_URL + "/movies/" + info.movieDbId + "/metadata", {
             'format': fileToModify.type,
             'path': filePath + fileToModify.name,
             'selectedMovie': info
@@ -129,7 +129,7 @@
 
       addMovie(){
         axios
-        .post(process.env._AXIOS_BASE_URL_ + "/movies", this.selectedMovie)
+        .post(process.env.BASE_URL + "/movies", this.selectedMovie)
         .then(async(response) => {
           await this.$store.commit('ADD_MOVIE', this.selectedMovie);
           alert ("Movie successfully added");
