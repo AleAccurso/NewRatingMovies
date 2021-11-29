@@ -82,6 +82,7 @@
       },
 
       getInfo(filePath, fileToModify, movie){
+        console.log("getInfo path:" + process.env._AXIOS_BASE_URL_ + "/movies/" + movie.id + "/getInfo");
         axios
         .post(process.env._AXIOS_BASE_URL_ + "/movies/" + movie.id + "/getInfo")
         .then((response) => {
