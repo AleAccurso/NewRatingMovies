@@ -95,6 +95,7 @@ const store = {
   },
   actions: {
     async nuxtServerInit({ commit }) {
+      console.log(process.env.BASE_URL);
       const response = await this.$axios
         .get(process.env.BASE_URL + "/movies")
         .then((response) => {
