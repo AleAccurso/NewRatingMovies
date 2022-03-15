@@ -87,6 +87,13 @@ export default {
   //Axios
   axios: {
     baseURL: process.env.BASE_URL,
+    requestInterceptor: (config, { store }) => {
+      const token = this.$cookiz.get('auth._token.local')
+      if(token){
+        config.headers.common['access_token'] = token
+      }
+      return config
+    },
   },
 
   // Environment variables

@@ -182,10 +182,7 @@ export default {
   },
   methods: {
     async logout() {
-      if (this.$cookiz.get("siteLang")) {
-        this.$cookiz.remove("siteLang");
-      }
-      await this.$auth.logout(); // this method will logout the user and make token to false on the local storage of the user browser
+      await this.$store.dispatch("logout");
     },
   },
   computed: {

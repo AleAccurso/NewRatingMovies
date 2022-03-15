@@ -115,6 +115,18 @@ const store = {
           commit("UPDATE_FAVORITE", response.data);
         });
     },
+
+    // Logout
+    async logout() {
+      if (this.$cookiz.get("siteLang")) {
+        this.$cookiz.remove("siteLang");
+      }
+      const response = await this.$axios
+        .delete(process.env.baseURL + "/auth/logout")
+        .then(async(response) => {
+          await this.$auth.logout(); // this method will logout the user and make token to false on the local storage of the user browser
+        });
+    },
   },
 
   getters: {
