@@ -2,7 +2,7 @@
   <transition name="bloc-modal" v-if="revele" id="movieModalDesktop">
     <div class="modal-backdrop" @click="toggleModal">
       <div class="modal">
-        <div class="modalContent">
+        <div class="movieDescription" v-if="!showTrailer">
           <figure>
             <!-- Poster -->
             <img
@@ -16,6 +16,7 @@
                 alt="default picture"
               />
             </div>
+            <UITrailerIcon class="trailerIcon" @click="toggleTrailer" />
           </figure>
           <div class="movieDesc">
             <div class="d-flex justify-content-between align-items-center">
@@ -96,6 +97,16 @@
             </div>
           </div>
         </div>
+        <div class="movieTrailer" v-if="showTrailer">
+          <iframe
+            class="trailer"
+            :src="baseVideoURL + videoKey"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; gyroscope"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
   </transition>
@@ -107,13 +118,19 @@ export default {
   data() {
     return {
       url: process.env.apiPicURL,
+      baseVideoURL: process.env.VIDEO_URL,
       noPic: "~/assets/no_picture.png",
       modalMovie: "",
+      showTrailer: true,
+      videoKey: "KokmzxszDow",
     };
   },
   methods: {
     close() {
       this.$emit("close");
+    },
+    toggleTrailer() {
+      this.showTrailer = !this.showTrailer;
     },
   },
   created() {
@@ -133,6 +150,7 @@ img {
   border: 0;
   border-radius: 10px;
   background-color: whitesmoke;
+  position: relative;
 }
 .defaultPicContainer {
   width: 300px;
@@ -156,7 +174,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modal {
@@ -168,7 +186,7 @@ img {
   border-radius: 10px;
   overflow: hidden;
 }
-.modalContent {
+.movieDescription {
   display: flex;
   background-color: #492e4e;
   padding: 20px;
@@ -176,6 +194,12 @@ img {
 }
 .poster {
   width: 350px;
+}
+.trailerIcon {
+  top: 0;
+  left: 0;
+  margin-left: 30px;
+  margin-top: 10px;
 }
 .movieDesc {
   display: block;
@@ -246,6 +270,17 @@ table span {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
   background-color: #9042b4;
+}
+
+.movieTrailer {
+  width: 900px;
+  height: 490px;
+}
+
+.trailer {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
 }
 
 @media (max-width: 1024px) {

@@ -3,20 +3,22 @@
     <div class="modal-backdrop" @click="toggleModal">
       <div class="modal">
         <div class="modalContent">
-          <div class="d-flex w-100">
-            <!-- Poster -->
-            <img
-              v-if="movie[siteLang].poster_path"
-              :srcset="url + movie[siteLang].poster_path"
-              class="m-auto"
-            />
-            <div v-else class="defaultPicContainer">
+          <div class="d-flex">
+            <figure>
+              <!-- Poster -->
               <img
-                class="defaultPic"
-                src="~/assets/no_picture.png"
-                alt="default picture"
+                v-if="movie[siteLang].poster_path"
+                :srcset="url + movie[siteLang].poster_path"
               />
-            </div>
+              <div v-else class="defaultPicContainer">
+                <img
+                  class="defaultPic"
+                  src="~/assets/no_picture.png"
+                  alt="default picture"
+                />
+              </div>
+            </figure>
+            <UITrailerIcon class="trailerIcon" />
           </div>
           <div class="d-block mt-4">
             <div>
@@ -120,6 +122,7 @@ img {
   border: 0;
   border-radius: 10px;
   background-color: whitesmoke;
+  position: relative;
 }
 .defaultPicContainer {
   display: flex;
@@ -134,6 +137,9 @@ img {
   height: 450px;
   height: auto;
   text-align: center;
+}
+.trailerIcon {
+  position: absolute;
 }
 .modal-backdrop {
   top: 0;

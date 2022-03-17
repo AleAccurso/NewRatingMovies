@@ -65,13 +65,13 @@
         </v-col>
       </v-row>
     </v-container>
-    <MovieModalMobile
+    <MovieModalDescMobile
       :revele="revele"
       :toggleModal="toggleModal"
       :movie="movieForModal"
       :siteLang="siteLang"
     />
-    <MovieModalDesktop
+    <MovieModalDescDesktop
       :revele="revele"
       :toggleModal="toggleModal"
       :movie="movieForModal"
