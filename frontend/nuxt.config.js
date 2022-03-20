@@ -213,5 +213,6 @@ export default {
   // Dov env module options
   dotenv: {
     /* module options */
-  }
+  },
+  rootDir: __dirname
 };
