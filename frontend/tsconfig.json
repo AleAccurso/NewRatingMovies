@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "baseUrl": ".",
     "types": [
-      "@nuxt/types",
       "@nuxtjs/i18n",
-      "@nuxt/test-utils",
       "jest",
     ],
   },
