@@ -7,14 +7,9 @@ exports.postSignin = async (req, res, next) => {
   try {
     const existUser = await userModel.findOne({ email: email });
     if (existUser) {
-      const error = new Error(
-        "Email already exist, please pick another email!"
-      );
-      res.status(409).json({
-        error: "Email already exist, please pick another email! ",
-      });
-      error.statusCode = 409;
-      throw error;
+      return res.status(409).json({
+        message: 'Email already exist, please pick another email!'
+      })
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -31,7 +26,9 @@ exports.postSignin = async (req, res, next) => {
     });
   } catch (err) {
     if (!err.statusCode) {
-      err.statusCode = 500;
+      return res.status(500).json({
+        message: 'Server error.'
+      })
     }
     next(err);
   }
@@ -45,18 +42,18 @@ exports.postLogin = async (req, res, next) => {
     const user = await userModel.findOne({ email: email });
 
     if (!user) {
-      const error = new Error("User with this email not found!");
-      error.statusCode = 401;
-      throw error;
+      return res.status(401).json({
+        message: 'User with this email not found!'
+      })
     }
     loadedUser = user;
 
     const comparePassword = bcrypt.compare(password, user.password);
 
     if (!comparePassword) {
-      const error = new Error("Password does not match!");
-      error.statusCode = 401;
-      throw error;
+      return res.status(401).json({
+        message: 'Password does not match!'
+      })
     }
     const token = jwt.sign({ email: loadedUser.email }, process.env.JWT_SECRET, {
       expiresIn: "3600s",
@@ -64,7 +61,9 @@ exports.postLogin = async (req, res, next) => {
     res.status(200).json({ token: token, language: loadedUser.language });
   } catch (err) {
     if (!err.statusCode) {
-      err.statusCode = 500;
+      return res.status(500).json({
+        message: 'Server error.'
+      })
     }
     next(err);
   }
@@ -72,12 +71,11 @@ exports.postLogin = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   jwt.sign(authHeader, "", { expiresIn: 1 } , (logout, err) => {
-    if (logout) {
+    if (authHeader) {
       res.status(200).send({msg : 'You have been Logged Out' });
     } else {
-      res.status(200).send({msg : 'Cannot log out.'});
+      res.status(404).send({msg : 'Nobody to log out.'});
     }
   })
 }
@@ -97,7 +95,7 @@ exports.getUser = (req, res, next) => {
       },
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       user: {},
       message: "No user Logged.",
     });
