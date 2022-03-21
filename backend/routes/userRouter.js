@@ -11,7 +11,7 @@ const Multer = require("multer");
 const upload = Multer({
   storage: Multer.MemoryStorage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // Maximum file size is 5MB
+    fileSize: 2 * 1024 * 1024, // Maximum file size is 2MB
   },
 }).single("avatar");
 
