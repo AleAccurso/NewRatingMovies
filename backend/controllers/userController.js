@@ -1,14 +1,14 @@
 const userModel = require("../models/userModel");
 
 const util = require("util");
-const { removeOldPic, uploadFile } = require("../helpers/upload");
+const { removeOldPic, uploadPic } = require("./userPicController");
 
 //Update user - To manage formData
 const Multer = require("multer");
 const upload = Multer({
   storage: Multer.MemoryStorage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // Maximum file size is 5MB
+    fileSize: 2 * 1024 * 1024, // Maximum file size is 2MB
   },
 }).single("avatar");
 
@@ -65,7 +65,7 @@ exports.updateUser = async (req, res, next) => {
       // Send file to Google Cloud Storage
       try {
         await util.promisify(upload);
-        const uploaded = await uploadFile(req, res);
+        const uploaded = await uploadPic(req, res);
       } catch (error) {
         res.status(500).send({ message: err.message });
       }
