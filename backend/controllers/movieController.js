@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const movieModel = require("../models/movieModel");
-
+const { msg } = require("../constants/response_messages");
 const { exec } = require("child_process");
 const { Console } = require("console");
 
@@ -9,8 +9,7 @@ const { Console } = require("console");
 exports.getAllMovies = async (req, res, next) => {
   const movies = movieModel.find({}, (err, movies) => {
     if (err) {
-      console.log("RETRIEVE error: " + err);
-      res.status(500).send("Error");
+      res.status(500).send({ message: msg.SERVER_ERROR });
     } else if (movies) {
       res.status(200).json(movies);
     }
@@ -26,10 +25,10 @@ exports.addMovie = async (req, res, next) => {
   movie
     .save()
     .then(() => {
-      res.status(201).json({ message: "Movie register sucessfull" });
+      res.status(201).json({ message: msg.SUCCESS_ACTION + "add_movie" });
       next();
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ message: error }));
 };
 
 //Get a specific movie by movieDbId
@@ -38,8 +37,7 @@ exports.getMovieByMovieDBId = async (req, res, next) => {
     { movieDbId: req.params.id },
     (err, movies) => {
       if (err) {
-        console.log("RETRIEVE error: " + err);
-        res.status(500).send("Error");
+        res.status(500).send({ message: msg.SERVER_ERROR });
       } else if (movies) {
         res.status(200).json(movies);
       }
@@ -56,7 +54,7 @@ exports.updateMovie = async (req, res, next) => {
     },
     (err) => {
       if (err) {
-        res.status(500).send("Error");
+        res.status(500).send({ message: msg.SERVER_ERROR });
       } else {
         res.status(200).json(req.body);
       }
@@ -68,9 +66,9 @@ exports.updateMovie = async (req, res, next) => {
 exports.deleteMovie = async (req, res, next) => {
   movieModel.deleteOne({ id: req.params.id }, (err) => {
     if (err) {
-      res.status(500).send("Error");
+      res.status(500).send({ message: msg.SERVER_ERROR });
     } else {
-      res.status(200).json("Movie deleted");
+      res.status(200).json({ message: msg.SUCCESS_ACTION + "delete_movie" });
     }
   });
 };
@@ -92,20 +90,24 @@ exports.updateMetaData = async (req, res, next) => {
       `mkvpropedit "${job.path}" -e info -s title="${job.selectedMovie.title}"`,
       (error, stdout, stderr) => {
         if (error) {
-          console.log(`error: ${error.message}`);
-          return;
+          // console.log(`error: ${error.message}`);
+          // return;
+          res.status(500).json({ message: error.message });
         }
         if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
+          // console.log(`stderr: ${stderr}`);
+          // return;
+          res.status(400).json({ message: stderr });
         }
         if (stdout) {
           console.log(stdout);
-          res.status(200).json("Metadata modified");
+          res
+            .status(200)
+            .json({ message: msg.SUCCESS_ACTION + "update_metadata" });
         }
       }
     );
   } else {
-    res.status(200).json("Not a MKV movie");
+    res.status(400).json({ message: msg.BAD_DATA + "mkv_required" });
   }
 };

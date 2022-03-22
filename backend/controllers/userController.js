@@ -1,7 +1,8 @@
 const userModel = require("../models/userModel");
+const { removeOldPic, uploadPic } = require("./userPicController");
 
 const util = require("util");
-const { removeOldPic, uploadPic } = require("./userPicController");
+const { authMsg, msg } = require("../constants/response_messages");
 
 //Update user - To manage formData
 const Multer = require("multer");
@@ -15,8 +16,7 @@ const upload = Multer({
 exports.getAllUsers = async (req, res, next) => {
   const user = userModel.find({}, (err, users) => {
     if (err) {
-      console.log("RETRIEVE error: " + err);
-      res.status(500).send("Error");
+      res.status(500).send({ message: msg.SERVER_ERROR });
     } else if (users) {
       res.status(200).json(users);
     }
@@ -31,14 +31,13 @@ exports.getUserById = async (req, res, next) => {
   if (userRole || userId == req.params.id) {
     const user = userModel.findOne({ _id: req.params.id }, (err, user) => {
       if (err) {
-        console.log("RETRIEVE error: " + err);
-        res.status(500).send("Error");
+        res.status(500).send({ message: msg.SERVER_ERROR });
       } else if (user) {
         res.status(200).json(user);
       }
     });
   } else {
-    res.status(401).send("Not authorized.");
+    res.status(403).send({ message: authMsg.UNAUTHORIZED });
   }
 };
 
@@ -79,14 +78,14 @@ exports.updateUser = async (req, res, next) => {
       },
       (err) => {
         if (err) {
-          res.status(500).send("Error");
+          res.status(500).send({ message: msg.SERVER_ERROR });
         } else {
           res.status(200).json(req.body);
         }
       }
     );
   } else {
-    res.status(401).send("Not authorized.");
+    res.status(403).send({ message: authMsg.UNAUTHORIZED });
   }
 };
 
@@ -98,13 +97,13 @@ exports.deleteUser = async (req, res, next) => {
   if (userRole || userId == req.params.id) {
     userModel.deleteOne({ _id: req.params.id }, (err) => {
       if (err) {
-        res.status(500).send("Error");
+        res.status(500).send({ message: msg.SERVER_ERROR });
       } else {
-        res.status(200).json("User deleted");
+        res.status(200).json({ message: msg.SUCCESS_ACTION + "delete_user" });
       }
     });
   } else {
-    res.status(401).send("Not authorized.");
+    res.status(403).send({ message: authMsg.UNAUTHORIZED });
   }
 };
 
@@ -112,8 +111,7 @@ exports.deleteUser = async (req, res, next) => {
 exports.userRate = async (req, res, next) => {
   const user = userModel.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
-      console.log("RETRIEVE error: " + err);
-      res.status(500).send("Error");
+      res.status(500).send({ message: msg.SERVER_ERROR });
     } else if (user) {
       let userChanged = false;
       let index = user.myRates.findIndex(
@@ -155,7 +153,7 @@ exports.userRate = async (req, res, next) => {
 exports.userFavorite = async (req, res, next) => {
   const user = userModel.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
-      res.status(500).send("Error");
+      res.status(500).send({ message: msg.SERVER_ERROR });
     } else if (user) {
       let index = user.myFavorites.indexOf(req.params.movieDbId);
       if (index >= 0) {

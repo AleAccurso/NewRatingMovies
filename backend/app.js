@@ -6,7 +6,7 @@ const app = express();
 const server = require("./database/database");
 
 // Manage HTTP requests
-const serverErrorManager = require("./errors/serverErrors");
+const serverErrorManager = require("./handlers/serverErrors");
 const bodyParser = require("body-parser");
 const httpHeaders = require("./config/httpHeaders");
 
@@ -29,5 +29,5 @@ app.use("/api/remote/", theMovideDBRouter);
 
 app.use(serverErrorManager);
 
-// connect to db and server
+// Connect to db and run server
 server.Initialise(app);
