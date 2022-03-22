@@ -15,7 +15,6 @@ exports.getAllMovies = async (req, res, next) => {
       res.status(200).json(movies);
     }
   });
-  next();
 };
 
 //Add a movie
@@ -46,7 +45,6 @@ exports.getMovieByMovieDBId = async (req, res, next) => {
       }
     }
   );
-  next();
 };
 
 //Update a movie
@@ -64,7 +62,6 @@ exports.updateMovie = async (req, res, next) => {
       }
     }
   );
-  next();
 };
 
 //Delete movie from DB
@@ -76,7 +73,6 @@ exports.deleteMovie = async (req, res, next) => {
       res.status(200).json("Movie deleted");
     }
   });
-  next();
 };
 
 //Change metadata
@@ -112,6 +108,4 @@ exports.updateMetaData = async (req, res, next) => {
   } else {
     res.status(200).json("Not a MKV movie");
   }
-
-  next();
 };

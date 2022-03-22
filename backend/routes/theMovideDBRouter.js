@@ -9,12 +9,12 @@ const isAdmin = require("../middleware/isAdmin");
 
 // Get a search result
 router.post(
-  "api/remote/search/:title/:language",
+  "/search/:title/:language",
   isAdmin,
   theMovieDBController.getSearchResultsFromAPI
 );
 
 // Get information about a movie from API
-router.post("api/remote/:id/getInfo", theMovieDBController.getInfoFromAPI);
+router.post("/:id/getInfo", theMovieDBController.getInfoFromAPI);
 
 module.exports = router;

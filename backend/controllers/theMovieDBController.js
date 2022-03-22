@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 //Get search result from api
 exports.getSearchResultsFromAPI = async (req, res, next) => {
   let url =

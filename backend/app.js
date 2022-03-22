@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 // Manage HTTP requests
-const serverErrorManager = require("./handlers/serverErrors");
+const serverErrorManager = require("./errors/serverErrors");
 const bodyParser = require("body-parser");
 const httpHeaders = require("./config/httpHeaders");
 
@@ -20,13 +20,14 @@ const theMovideDBRouter = require("./routes/theMovideDBRouter");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(httpHeaders);
-app.use(serverErrorManager);
 
 // Routes
 app.use("/api/auth/", authRouter);
 app.use("/api/movies/", movieRouter);
 app.use("/api/users/", userRouter);
 app.use("/api/remote/", theMovideDBRouter);
+
+app.use(serverErrorManager);
 
 // connect to db
 mongoose
