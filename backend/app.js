@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-const mongoose = require("mongoose");
+const server = require("./database/database");
 
 // Manage HTTP requests
 const serverErrorManager = require("./errors/serverErrors");
@@ -29,13 +29,5 @@ app.use("/api/remote/", theMovideDBRouter);
 
 app.use(serverErrorManager);
 
-// connect to db
-mongoose
-  .connect(process.env.MONGOOSE_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then((result) => {
-    app.listen(process.env.PORT, () => console.log("Server started."));
-  })
-  .catch((err) => console.log(err));
+// connect to db and server
+server.Initialise(app);
