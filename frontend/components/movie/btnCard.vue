@@ -120,7 +120,7 @@ export default {
     },
     async getInfo(filePath, fileToModify, movie) {
       const response = await axios
-        .post(this.baseURL + "/movies/" + movie.id + "/getInfo")
+        .post(this.baseURL + "/the-movie-db/" + movie.id + "/getInfo")
         .then(async (response) => {
           this.selectedMovie = await response.data;
           if (filePath === null) {

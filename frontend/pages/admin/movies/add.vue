@@ -42,6 +42,7 @@
     <div v-if="this.results !== ''">
       <MovieBtnCard :btnTxt="this.btnTxt" />
     </div>
+    <UIBtnTop :showAt="300" />
   </div>
 </template>
 

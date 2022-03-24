@@ -79,32 +79,27 @@ const store = {
     async updateLoggedUser({ commit }, [id, formData]) {
       let config = {
         headers: {
-          'content-type': 'multipart/form-data'
-        }
+          "content-type": "multipart/form-data",
+        },
       };
 
       const response = await this.$axios({
-        method: 'post',
+        method: "post",
         url: process.env.baseURL + "/users/" + id,
-        data:  formData,
-        config: config
+        data: formData,
+        config: config,
       })
-      .then(async (response) => {
-        await commit("usersStore/UPDATE_USER", {
-          _id: id,
-          ...response.data,
+        .then(async (response) => {
+          await commit("usersStore/UPDATE_USER", {
+            _id: id,
+            ...response.data,
+          });
+          await commit("UPDATE_LOGGED_USER", response.data);
+          commit("SET_LANG", formData.get("language"));
+        })
+        .catch((err) => {
+          this.$toast.error(err);
         });
-        await commit("UPDATE_LOGGED_USER", response.data);
-        commit("SET_LANG", formData.get("language"));
-      })
-      .catch((err) => {
-        this.$toast.error(err);
-      });
-    },
-
-    // Upload file
-    async uploadPic({ commit }, file) {
-      const response = await this.$axios
     },
 
     //Update favorite
@@ -123,7 +118,7 @@ const store = {
       }
       const response = await this.$axios
         .delete(process.env.baseURL + "/auth/logout")
-        .then(async(response) => {
+        .then(async (response) => {
           await this.$auth.logout(); // this method will logout the user and make token to false on the local storage of the user browser
         });
     },

@@ -86,7 +86,9 @@ const actions = {
   //Get search results from API
   async getSearchResults({ commit }, [title, language]) {
     const response = await this.$axios
-      .post(process.env.baseURL + "/movies/search/" + title + "/" + language)
+      .post(
+        process.env.baseURL + "/the-movie-db/search/" + title + "/" + language
+      )
       .then((response) => {
         commit("SET_RESULT", response.data);
       });

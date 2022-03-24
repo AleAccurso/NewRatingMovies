@@ -140,7 +140,7 @@ exports.getInfoFromAPI = async (req, res, next) => {
       )
       .then((response) => {
         videos = response.data.results;
-        let trailers = [];
+        let movieTrailers = [];
         videos.forEach((video) => {
           if (
             video.official == true &&
@@ -151,10 +151,10 @@ exports.getInfoFromAPI = async (req, res, next) => {
               name: video.name,
               key: video.key,
             };
-            trailers.push(toAdd);
+            movieTrailers.push(toAdd);
           }
         });
-        infoToReturn[otherLangs[index]].trailers = trailers;
+        infoToReturn[otherLangs[index]].trailers = movieTrailers;
       });
   }
   res.status(200).json(infoToReturn);
