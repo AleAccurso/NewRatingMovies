@@ -25,7 +25,7 @@ app.use(httpHeaders);
 app.use("/api/auth/", authRouter);
 app.use("/api/movies/", movieRouter);
 app.use("/api/users/", userRouter);
-app.use("/api/remote/", theMovideDBRouter);
+app.use("/api/the-movie-db/", theMovideDBRouter);
 
 app.use(serverErrorManager);
 
