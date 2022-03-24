@@ -96,11 +96,6 @@ exports.getInfoFromAPI = async (req, res, next) => {
         release_date: fullMovieData["release_date"],
         director: director,
         casting: actors,
-        en: {
-          title: fullMovieData["title"],
-          overview: fullMovieData["overview"],
-          poster_path: fullMovieData["poster_path"],
-        },
       };
     })
     .catch((error) => {
@@ -108,7 +103,7 @@ exports.getInfoFromAPI = async (req, res, next) => {
     });
 
   //Add information of the other languages
-  let otherLangs = ["fr", "nl", "it"];
+  let otherLangs = ["en", "fr", "nl", "it"];
 
   for (let index = 0; index < otherLangs.length; index++) {
     await axios
@@ -131,6 +126,35 @@ exports.getInfoFromAPI = async (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
+      });
+
+    await axios
+      .get(
+        process.env.API_URL +
+          "/movie/" +
+          req.params.id +
+          "/videos?api_key=" +
+          process.env.API_TOKEN +
+          "&language=" +
+          otherLangs[index]
+      )
+      .then((response) => {
+        videos = response.data.results;
+        let trailers = [];
+        videos.forEach((video) => {
+          if (
+            video.official == true &&
+            video.site == "YouTube" &&
+            video.type == "Trailer"
+          ) {
+            let toAdd = {
+              name: video.name,
+              key: video.key,
+            };
+            trailers.push(toAdd);
+          }
+        });
+        infoToReturn[otherLangs[index]].trailers = trailers;
       });
   }
   res.status(200).json(infoToReturn);
