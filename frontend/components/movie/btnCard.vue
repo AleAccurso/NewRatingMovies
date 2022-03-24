@@ -65,13 +65,13 @@
         </v-col>
       </v-row>
     </v-container>
-    <MovieModalDescMobile
+    <MovieModalMobile
       :revele="revele"
       :toggleModal="toggleModal"
       :movie="movieForModal"
       :siteLang="siteLang"
     />
-    <MovieModalDescDesktop
+    <MovieModalDesktop
       :revele="revele"
       :toggleModal="toggleModal"
       :movie="movieForModal"
@@ -259,6 +259,11 @@ figure {
 .hover10 figure:hover img {
   -webkit-filter: sepia(100%);
   filter: sepia(100%);
+}
+@media (max-width: 1024px) {
+  #desktopModal {
+    display: none;
+  }
 }
 
 @media (min-width: 1251px) {

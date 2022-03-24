@@ -121,7 +121,7 @@ export default {
       baseVideoURL: process.env.VIDEO_URL,
       noPic: "~/assets/no_picture.png",
       modalMovie: "",
-      showTrailer: true,
+      showTrailer: false,
       videoKey: "KokmzxszDow",
     };
   },
