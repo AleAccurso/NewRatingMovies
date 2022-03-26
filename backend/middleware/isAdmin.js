@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { authMsg } = require("../constants/response_messages");
 const userModel = require("../models/userModel");
 
 module.exports = async (req, res, next) => {
@@ -12,7 +13,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(403).json({
-      message: "Admin only!",
+      message: authMsg.UNAUTHORIZED,
     });
   }
 };

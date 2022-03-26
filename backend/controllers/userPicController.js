@@ -62,5 +62,3 @@ exports.uploadPic = async (req, res) => {
     });
   }
 };
-
-// module.exports = { uploadFile, removeOldPic }
