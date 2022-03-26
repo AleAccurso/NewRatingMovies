@@ -20,7 +20,7 @@ const upload = Multer({
 */
 
 // Get all users
-router.get("/", userController.getAllUsers);
+router.get("/", userController.getUsers);
 
 router
   .route("/:id")

@@ -7,7 +7,7 @@ const isAdmin = require("../middleware/isAdmin");
 
 router
   .route("/")
-  .get(movieController.getAllMovies) // Get all movies
+  .get(movieController.getMovies) // Get movies with pagination params in query
   .post(isAdmin, movieController.addMovie); // Add a movie
 
 router

@@ -13,14 +13,21 @@ const upload = Multer({
   },
 }).single("avatar");
 
-exports.getAllUsers = async (req, res, next) => {
-  const user = userModel.find({}, (err, users) => {
-    if (err) {
-      res.status(500).send({ message: msg.SERVER_ERROR });
-    } else if (users) {
-      res.status(200).json(users);
-    }
-  });
+exports.getUsers = async (req, res, next) => {
+  pageInt = parseInt(req.query.page);
+  sizeInt = parseInt(req.query.size);
+
+  const user = userModel
+    .find()
+    .skip(pageInt * sizeInt)
+    .limit(sizeInt)
+    .exec((err, users) => {
+      if (err) {
+        res.status(500).send({ message: msg.SERVER_ERROR });
+      } else if (users) {
+        res.status(200).json(users);
+      }
+    });
 };
 
 //Get a user
