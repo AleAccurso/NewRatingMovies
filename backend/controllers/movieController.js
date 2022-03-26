@@ -9,18 +9,59 @@ const { Console } = require("console");
 exports.getMovies = async (req, res, next) => {
   pageInt = parseInt(req.query.page);
   sizeInt = parseInt(req.query.size);
+  data = req.query.data;
 
-  const movies = movieModel
-    .find()
-    .skip(pageInt * sizeInt)
-    .limit(sizeInt)
-    .exec((err, movies) => {
-      if (err) {
-        res.status(500).send({ message: msg.SERVER_ERROR });
-      } else if (movies) {
-        res.status(200).json(movies);
-      }
-    });
+  if (!isNaN(pageInt) && !isNaN(sizeInt)) {
+    if (data == "full") {
+      const movies = movieModel
+        .find()
+        .skip(pageInt * sizeInt)
+        .limit(sizeInt)
+        .exec((err, movies) => {
+          if (err) {
+            res.status(500).send({ message: msg.SERVER_ERROR });
+          } else if (movies) {
+            res.status(200).json(movies);
+          }
+        });
+    } else if (data == "min") {
+      const movies = movieModel
+        .find()
+        .select({
+          _id: 1,
+          release_date: 1,
+          en: {
+            title: 1,
+            poster_path: 1,
+          },
+          fr: {
+            title: 1,
+            poster_path: 1,
+          },
+          it: {
+            title: 1,
+            poster_path: 1,
+          },
+          nl: {
+            title: 1,
+            poster_path: 1,
+          },
+        })
+        .skip(pageInt * sizeInt)
+        .limit(sizeInt)
+        .exec((err, movies) => {
+          if (err) {
+            res.status(500).send({ message: msg.SERVER_ERROR });
+          } else if (movies) {
+            res.status(200).json(movies);
+          }
+        });
+    } else {
+      res.status(400).json({ message: msg.BAD_PARAMS + "data" });
+    }
+  } else {
+    res.status(400).json({ message: msg.BAD_PARAMS + "page_size" });
+  }
 };
 
 //Add a movie

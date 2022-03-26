@@ -11,6 +11,7 @@ const msg = {
   RESOURCE_NOT_FOUND: "data_not_found/resource=",
   SUCCESS_ACTION: "successfull/action=",
   BAD_DATA: "bad_data/resource=",
+  BAD_PARAMS: "bad_params/param=",
 };
 
 module.exports = { authMsg, msg };

@@ -48,9 +48,7 @@ const store = {
 
   actions: {
     async nuxtServerInit({ dispatch, commit }) {
-      //set all movies and all users
-      await dispatch("moviesStore/setMovies");
-      await dispatch("usersStore/setUsers");
+      await dispatch("moviesStore/getMovies", [0, 1, "min"]);
 
       // Site language
       if (this.$cookiz.get("siteLang")) {

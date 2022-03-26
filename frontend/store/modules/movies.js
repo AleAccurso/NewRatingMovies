@@ -42,9 +42,12 @@ const mutations = {
 
 //Actions
 const actions = {
-  async setMovies({ commit }) {
+  async getMovies({ commit }, [page, rows, data]) {
     const response = await this.$axios
-      .get(process.env.baseURL + "/movies")
+      .get(
+        process.env.baseURL +
+          `/movies?page=${page}&size=${4 * rows}&data=${data}`
+      )
       .then((response) => {
         commit("SET_MOVIES", response.data);
       });
