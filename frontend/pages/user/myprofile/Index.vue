@@ -93,6 +93,7 @@
 
 <script>
 export default {
+  middleware: "isAuthenticated", // it will use `isAuthenticated` middleware
   data() {
     return {
       locale: "",

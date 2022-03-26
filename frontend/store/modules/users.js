@@ -35,7 +35,7 @@ const mutations = {
 const actions = {
   async setUsers({ commit }) {
     const response = await this.$axios
-      .get(process.env.baseURL + "/users")
+      .get(process.env.baseURL + "/users?page=0&size=5")
       .then((response) => {
         commit("SET_USERS", response.data);
       })
