@@ -3,7 +3,7 @@
     <div id="movieHome" v-if="movies.length > 0">
       <v-container class="grey lighten-5 mainContainer">
         <v-row no-gutters>
-          <v-col v-for="movie in movies" :key="movie._id" cols="12" sm="3">
+          <v-col v-for="movie in movies" :key="movie._id" cols="6" sm="3">
             <div class="card">
               <v-card>
                 <div class="hover10">
