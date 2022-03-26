@@ -6,23 +6,6 @@ const { exec } = require("child_process");
 const { Console } = require("console");
 
 //get movies
-exports.getMoviesFull = async (req, res, next) => {
-  pageInt = parseInt(req.query.page);
-  sizeInt = parseInt(req.query.size);
-
-  const movies = movieModel
-    .find()
-    .skip(pageInt * sizeInt)
-    .limit(sizeInt)
-    .exec((err, movies) => {
-      if (err) {
-        res.status(500).send({ message: msg.SERVER_ERROR });
-      } else if (movies) {
-        res.status(200).json(movies);
-      }
-    });
-};
-
 exports.getMovies = async (req, res, next) => {
   pageInt = parseInt(req.query.page);
   sizeInt = parseInt(req.query.size);
