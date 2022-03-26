@@ -17,7 +17,7 @@
           <nuxt-link
             class="nav-link active"
             aria-current="page"
-            :to="{ name: `user-favorites___${locale}`, hash: '#logo' }"
+            :to="{ name: `users-favorites___${locale}`, hash: '#logo' }"
           >
             <img class="HeaderFavIcon" src="~/assets/favIcons/favFull.png" />
           </nuxt-link>
@@ -104,7 +104,7 @@
               <nuxt-link
                 class="nav-link active"
                 aria-current="page"
-                to="/user/myprofile"
+                :to="{ name: `users-myprofile___${locale}`, hash: '#logo' }"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

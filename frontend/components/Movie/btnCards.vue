@@ -65,18 +65,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <MovieModalMobile
-      :revele="revele"
-      :toggleModal="toggleModal"
-      :movie="movieForModal"
-      :siteLang="siteLang"
-    />
-    <MovieModalDesktop
-      :revele="revele"
-      :toggleModal="toggleModal"
-      :movie="movieForModal"
-      :siteLang="siteLang"
-    />
   </div>
 </template>
 
@@ -98,8 +86,6 @@ export default {
       overview: "",
       strGenre: "",
       url: process.env.apiPicURL,
-      movieForModal: "",
-      revele: false,
       baseURL: process.env.baseURL,
       siteLang: "",
     };
@@ -166,11 +152,6 @@ export default {
     async addMovie() {
       await this.$store.dispatch("moviesStore/addMovie", this.selectedMovie);
       this.$toast.success(this.$t("addDone"));
-    },
-
-    toggleModal(movie) {
-      this.revele = !this.revele;
-      this.movieForModal = movie;
     },
   },
   created() {
@@ -259,11 +240,6 @@ figure {
 .hover10 figure:hover img {
   -webkit-filter: sepia(100%);
   filter: sepia(100%);
-}
-@media (max-width: 1024px) {
-  #desktopModal {
-    display: none;
-  }
 }
 
 @media (min-width: 1251px) {

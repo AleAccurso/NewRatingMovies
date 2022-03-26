@@ -5,7 +5,7 @@
       <span id="nickname">{{ $t("welcome") }} {{ loggedUser.nickname }}</span>
       <nuxt-link
         :to="{
-          name: `user-myprofile-update-id___${locale}`,
+          name: `users-myprofile-id___${locale}`,
           params: { id: loggedUser.id },
           hash: '#logo',
         }"

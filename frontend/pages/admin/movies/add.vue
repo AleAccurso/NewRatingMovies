@@ -40,15 +40,13 @@
       </v-form>
     </v-container>
     <div v-if="this.results !== ''">
-      <MovieBtnCard :btnTxt="this.btnTxt" />
+      <MovieBtnCards :btnTxt="this.btnTxt" />
     </div>
     <UIBtnTop :showAt="300" />
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   data: () => ({
     btnTxt: "add",

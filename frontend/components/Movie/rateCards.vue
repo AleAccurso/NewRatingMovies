@@ -4,61 +4,54 @@
       <v-container class="grey lighten-5 mainContainer">
         <v-row no-gutters>
           <v-col v-for="movie in movies" :key="movie._id" cols="6" sm="3">
-            <div class="card">
-              <v-card>
-                <div class="hover10">
-                  <figure>
-                    <img
-                      @click="toggleModal(movie)"
-                      class="imgMovieCard"
-                      :srcset="url + movie[siteLang].poster_path"
-                    />
-                    <UIFavoriteIcon
-                      v-if="isAuthenticated"
-                      :myFavorites="myFavorites"
-                      :movieDbId="movie.movieDbId"
-                    />
-                  </figure>
-                </div>
-                <div class="cardInfos">
-                  <v-card-title v-if="movie[siteLang].title.length > 22"
-                    >{{
-                      movie[siteLang].title.substring(0, 22)
-                    }}...</v-card-title
-                  >
-                  <v-card-title v-else>{{
-                    movie[siteLang].title
-                  }}</v-card-title>
-                  <div v-if="isAuthenticated" class="text-subtitle-1">
-                    {{ movie.release_date.substring(0, 4) }}
+            <nuxt-link
+              class="nav-link active"
+              aria-current="page"
+              :to="{ name: `movies-id___${siteLang}`, hash: '#logo' }"
+            >
+              <div class="card">
+                <v-card>
+                  <div class="hover10">
+                    <figure>
+                      <img
+                        class="imgMovieCard"
+                        :srcset="url + movie[siteLang].poster_path"
+                      />
+                      <UIFavoriteIcon
+                        v-if="isAuthenticated"
+                        :myFavorites="myFavorites"
+                        :movieDbId="movie.movieDbId"
+                      />
+                    </figure>
                   </div>
-                  <div v-else class="text-subtitle-1">
-                    {{ movie.release_date.substring(0, 4) }}
+                  <div class="cardInfos">
+                    <v-card-title v-if="movie[siteLang].title.length > 22"
+                      >{{
+                        movie[siteLang].title.substring(0, 22)
+                      }}...</v-card-title
+                    >
+                    <v-card-title v-else>{{
+                      movie[siteLang].title
+                    }}</v-card-title>
+                    <div v-if="isAuthenticated" class="text-subtitle-1">
+                      {{ movie.release_date.substring(0, 4) }}
+                    </div>
+                    <div v-else class="text-subtitle-1">
+                      {{ movie.release_date.substring(0, 4) }}
+                    </div>
+                    <div v-if="isAuthenticated">
+                      <UIRatingStars
+                        :myRates="myRates"
+                        :movieDbId="movie.movieDbId"
+                      />
+                    </div>
                   </div>
-                  <div v-if="isAuthenticated">
-                    <UIRatingStars
-                      :myRates="myRates"
-                      :movieDbId="movie.movieDbId"
-                    />
-                  </div>
-                </div>
-              </v-card>
-            </div>
+                </v-card>
+              </div>
+            </nuxt-link>
           </v-col>
         </v-row>
       </v-container>
-      <MovieModalMobile
-        :revele="revele"
-        :toggleModal="toggleModal"
-        :movie="movieForModal"
-        :siteLang="siteLang"
-      />
-      <MovieModalDesktop
-        :revele="revele"
-        :toggleModal="toggleModal"
-        :movie="movieForModal"
-        :siteLang="siteLang"
-      />
     </div>
     <div v-else class="noMovieInDB">
       <img src="~/assets/No-Movie.png" alt="no-movie.png" />
@@ -77,8 +70,6 @@ export default {
       sortBy: "title",
       sortDirection: "asc",
       siteLang: "",
-      movieForModal: "",
-      revele: false,
       myRates: [],
       myFavorites: [],
     };
@@ -86,12 +77,6 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated; // it check if user isAuthenticated
-    },
-  },
-  methods: {
-    toggleModal(movie) {
-      this.revele = !this.revele;
-      this.movieForModal = movie;
     },
   },
   created() {
