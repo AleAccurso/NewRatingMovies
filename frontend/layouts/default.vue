@@ -14,6 +14,7 @@
 :root {
   --color-fushia: #9042b4;
   --color-rose: #a52199;
+  --color-purple: #492e4e;
 }
 html {
   min-width: 100%;

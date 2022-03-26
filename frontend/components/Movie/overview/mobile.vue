@@ -164,7 +164,7 @@ img {
 }
 .modalContent {
   display: block;
-  background-color: #492e4e;
+  background-color: var(--color-purple);
   padding: 20px;
   width: 100%;
   height: auto;
