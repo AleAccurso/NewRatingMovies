@@ -104,7 +104,7 @@
               <nuxt-link
                 class="nav-link active"
                 aria-current="page"
-                to="/myprofile"
+                to="/user/myprofile"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

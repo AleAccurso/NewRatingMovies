@@ -3,7 +3,7 @@
     <UIBigLogo />
     <v-container class="grey lighten-5 square">
       <!-- Back button -->
-      <UIBackBtn :path="'myprofile'" />
+      <UIBackBtn :path="'user-myprofile'" />
       <!-- Page logo and title -->
       <div class="pageLogoTitle">
         <svg style="width: 65px; height: 65px" viewBox="0 0 24 24">
