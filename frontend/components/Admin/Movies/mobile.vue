@@ -148,12 +148,12 @@ export default {
 .overviewTxt::-webkit-scrollbar-thumb {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
-  background-color: #9042b4;
+  background-color: var(--color-fushia);
 }
 .infoTitle {
   font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
 .infoText {

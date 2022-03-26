@@ -211,17 +211,17 @@ export default {
   font-weight: 600;
 }
 .nav-link:focus {
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
 }
 .v-tabs-slider {
-  background-color: #9042b4;
+  background-color: var(--color-fushia);
   height: 100%;
   width: 100%;
 }
 .v-tab:hover {
-  background-color: #9042b4;
+  background-color: var(--color-fushia);
 }
 .nav-link:hover {
   color: #ffffff;

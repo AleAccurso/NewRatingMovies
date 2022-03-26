@@ -147,7 +147,7 @@ export default {
 <style scoped>
 .backBtn {
   padding: 0;
-  color: #a52199;
+  color: var(--color-rose);
 }
 .square {
   width: 700px;
@@ -179,7 +179,7 @@ export default {
 }
 .confirmButton {
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-rose);
   font-family: "Lato", sans-serif;
   margin-top: 10px;
   font-weight: 500;

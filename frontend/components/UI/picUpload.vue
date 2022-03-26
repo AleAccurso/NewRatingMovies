@@ -59,7 +59,7 @@ export default {
 <style scoped>
 .clickButton {
   color: #fff;
-  border: 1px solid #a52199;
+  border: 1px solid var(--color-rose);
   font-family: "Lato", sans-serif;
   margin-top: 10px;
   font-weight: 500;

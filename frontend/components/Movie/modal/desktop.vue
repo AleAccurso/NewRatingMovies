@@ -206,13 +206,13 @@ img {
   margin-left: 20px;
 }
 .bigTitle {
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   font-size: 30px;
 }
 .smallTitle {
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   font-size: 20px;
@@ -249,7 +249,7 @@ table {
   font-size: 15px;
 }
 table span {
-  color: #9042b4;
+  color: var(--color-fushia);
 }
 .overview {
   height: 265px;
@@ -269,7 +269,7 @@ table span {
 .overview::-webkit-scrollbar-thumb {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
-  background-color: #9042b4;
+  background-color: var(--color-fushia);
 }
 
 .movieTrailer {

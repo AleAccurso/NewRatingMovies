@@ -126,13 +126,13 @@ export default {
 }
 .registerButton {
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-rose);
   font-family: "Lato", sans-serif;
   font-weight: 500;
   font-size: 17px;
 }
 .fields {
-  color: #a52199;
+  color: var(--color-rose);
   font-family: "Lato", sans-serif;
   font-weight: 500;
   font-size: 17px;

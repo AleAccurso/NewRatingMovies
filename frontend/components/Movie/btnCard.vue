@@ -212,7 +212,7 @@ export default {
 }
 .v-card__title {
   padding: 10px 10px 0 10px;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
 }
@@ -220,7 +220,7 @@ export default {
   padding: 0 0 0 6px;
   font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
 .v-card__actions {
@@ -229,7 +229,7 @@ export default {
 .v-card__actions button {
   margin: 0 auto 10px auto;
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-fushia);
   font-family: "Lato", sans-serif;
   font-weight: 500;
   font-size: 17px;

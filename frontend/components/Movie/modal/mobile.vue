@@ -171,13 +171,13 @@ img {
   border-radius: 10px;
 }
 .bigTitle {
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   font-size: 30px;
 }
 .smallTitle {
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   font-size: 20px;
@@ -211,7 +211,7 @@ img {
   font-weight: 400;
 }
 span {
-  color: #9042b4;
+  color: var(--color-fushia);
 }
 .overview {
   height: 200px;
@@ -232,7 +232,7 @@ span {
 .overview::-webkit-scrollbar-thumb {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
-  background-color: #9042b4;
+  background-color: var(--color-fushia);
 }
 
 @media (min-width: 1025px) {

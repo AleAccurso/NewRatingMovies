@@ -3,23 +3,54 @@
     <div v-if="allUsers.length > 0">
       <v-card v-for="user in allUsers" :key="user._id">
         <table>
-          <tr><td class="infoTitle">#</td></tr>
-          <tr><td class="infoText">{{ user._id }}</td></tr>
-          <tr><td class="infoTitle">{{ $t('nickname') }}</td></tr>
-          <tr><td class="infoText">{{ user.nickname }}</td></tr>
-          <tr><td class="infoTitle">{{ $t('emailAddress') }}</td></tr>
-          <tr><td class="infoText">{{ user.email }}</td></tr>
-          <tr><td class="infoTitle">{{ $t('language') }}</td></tr>
-          <tr v-if="user.language === 'fr'"><td class="infoText">{{ $t('french') }}</td></tr>
-          <tr v-if="user.language === 'en'"><td class="infoText">{{ $t('english') }}</td></tr>
-          <tr v-if="user.language === 'nl'"><td class="infoText">{{ $t('dutch') }}</td></tr>
-          <tr v-if="user.language === 'it'"><td class="infoText">{{ $t('italian') }}</td></tr>
-          <tr><td class="infoTitle">{{ $t('admin') }}</td></tr>
-          <tr v-if="user.isAdmin"><td><img class="true" src="@/assets/true.png" alt="true.png"></td></tr>
-          <tr v-else><td><img class="false" src="@/assets/false.png" alt="true.png"></td></tr>
+          <tr>
+            <td class="infoTitle">#</td>
+          </tr>
+          <tr>
+            <td class="infoText">{{ user._id }}</td>
+          </tr>
+          <tr>
+            <td class="infoTitle">{{ $t("nickname") }}</td>
+          </tr>
+          <tr>
+            <td class="infoText">{{ user.nickname }}</td>
+          </tr>
+          <tr>
+            <td class="infoTitle">{{ $t("emailAddress") }}</td>
+          </tr>
+          <tr>
+            <td class="infoText">{{ user.email }}</td>
+          </tr>
+          <tr>
+            <td class="infoTitle">{{ $t("language") }}</td>
+          </tr>
+          <tr v-if="user.language === 'fr'">
+            <td class="infoText">{{ $t("french") }}</td>
+          </tr>
+          <tr v-if="user.language === 'en'">
+            <td class="infoText">{{ $t("english") }}</td>
+          </tr>
+          <tr v-if="user.language === 'nl'">
+            <td class="infoText">{{ $t("dutch") }}</td>
+          </tr>
+          <tr v-if="user.language === 'it'">
+            <td class="infoText">{{ $t("italian") }}</td>
+          </tr>
+          <tr>
+            <td class="infoTitle">{{ $t("admin") }}</td>
+          </tr>
+          <tr v-if="user.isAdmin">
+            <td><img class="true" src="@/assets/true.png" alt="true.png" /></td>
+          </tr>
+          <tr v-else>
+            <td>
+              <img class="false" src="@/assets/false.png" alt="true.png" />
+            </td>
+          </tr>
         </table>
         <div class="d-flex justify-content-evenly">
-          <nuxt-link :to="{
+          <nuxt-link
+            :to="{
               name: `admin-users-update-id___${locale}`,
               params: { id: user._id },
               hash: '#logo',
@@ -50,82 +81,81 @@
       </v-card>
     </div>
     <div v-else>
-      <span>{{ $t('noUserInDB') }}</span>
+      <span>{{ $t("noUserInDB") }}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
-      locale: ''
-    }
+  data() {
+    return {
+      locale: "",
+    };
   },
   methods: {
     async deleteUser(_id) {
-      if(confirm(this.$t('deleteUserOK'))){
-        await this.$store.dispatch('usersStore/deleteUser', _id);
+      if (confirm(this.$t("deleteUserOK"))) {
+        await this.$store.dispatch("usersStore/deleteUser", _id);
         this.$toast.success(this.$t("deleteDone"));
       }
-    }
+    },
   },
   computed: {
-    allUsers(){
-      return this.$store.getters['usersStore/getUsers'];
+    allUsers() {
+      return this.$store.getters["usersStore/getUsers"];
     },
-    roleIsAdmin(){
-      if (this.$store.getters.roleIsAdmin === true){
+    roleIsAdmin() {
+      if (this.$store.getters.roleIsAdmin === true) {
         return true;
+      } else {
+        this.$router.push("/");
       }
-      else{
-        this.$router.push('/')
-      }
-    }
+    },
   },
-  created(){
-    this.locale = this.$cookiz.get('siteLang');
+  created() {
+    this.locale = this.$cookiz.get("siteLang");
     this.$i18n.setLocale(this.locale);
   },
   async beforeCreate() {
-    await this.$store.dispatch('usersStore/setUsers');
+    await this.$store.dispatch("usersStore/setUsers");
   },
-}
+};
 </script>
 
 <style scoped>
-#adminUsersMobile{
+#adminUsersMobile {
   display: block;
 }
-.v-card{
+.v-card {
   border: 1px white solid;
   margin: 10px 0;
   padding: 10px;
 }
-.infoTitle{
-  font-family: 'Lato', sans-serif;
+.infoTitle {
+  font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
-.infoText{
+.infoText {
   color: #fff;
-  padding-left:15px;
+  padding-left: 15px;
 }
-.true{
+.true {
   height: 20px;
   width: auto;
   margin-left: 20px;
 }
-.false{
+.false {
   height: 18px;
   width: auto;
   margin-left: 20px;
 }
 
-@media (min-width: 1025px){
-  #adminUsersMobile{
-    display:none;
+@media (min-width: 1025px) {
+  #adminUsersMobile {
+    display: none;
   }
 }
 </style>

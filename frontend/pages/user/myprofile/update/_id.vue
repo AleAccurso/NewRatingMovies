@@ -231,7 +231,7 @@ export default {
 }
 .confirmButton {
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-rose);
   font-family: "Lato", sans-serif;
   margin-top: 10px;
   font-weight: 500;

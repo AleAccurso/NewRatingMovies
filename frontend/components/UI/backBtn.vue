@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- Back button -->
-    <nuxt-link :to="{ name: `${path}___${locale}`, hash: '#logo' }" class="backBtn">
+    <nuxt-link
+      :to="{ name: `${path}___${locale}`, hash: '#logo' }"
+      class="backBtn"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="40"
@@ -9,9 +12,9 @@
         fill="currentColor"
         viewBox="0 0 16 16"
       >
-      <path
-        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
-      />
+        <path
+          d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+        />
       </svg>
     </nuxt-link>
   </div>
@@ -19,25 +22,25 @@
 
 <script>
 export default {
-  name:"backBtn",
-  props: ['path'],
-  data(){
-    return{
-      locale: ''
-    }
+  name: "backBtn",
+  props: ["path"],
+  data() {
+    return {
+      locale: "",
+    };
   },
-  created(){
-    this.locale = this.$cookiz.get('siteLang');
-  }
-}
+  created() {
+    this.locale = this.$cookiz.get("siteLang");
+  },
+};
 </script>
 
 <style scoped>
-.backBtn{
+.backBtn {
   padding: 0;
-  color:#fff;
+  color: #fff;
 }
-.backBtn:hover{
-  color: #A52199;
+.backBtn:hover {
+  color: var(--color-rose);
 }
 </style>

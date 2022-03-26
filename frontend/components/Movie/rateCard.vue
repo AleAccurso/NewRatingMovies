@@ -134,7 +134,7 @@ export default {
 }
 .v-card__title {
   padding: 10px 10px 0 10px;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
 }
@@ -142,7 +142,7 @@ export default {
   padding-left: 10px;
   font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
 .cardInfos {
