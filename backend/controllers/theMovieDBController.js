@@ -142,11 +142,7 @@ exports.getInfoFromAPI = async (req, res, next) => {
         videos = response.data.results;
         let movieTrailers = [];
         videos.forEach((video) => {
-          if (
-            video.official == true &&
-            video.site == "YouTube" &&
-            video.type == "Trailer"
-          ) {
+          if (video.site == "YouTube") {
             let toAdd = {
               name: video.name,
               key: video.key,

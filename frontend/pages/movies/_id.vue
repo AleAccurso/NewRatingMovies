@@ -2,7 +2,7 @@
   <div class="moviePage">
     <UIBigLogo />
     <MovieOverviewDesktop class="desktop" :siteLang="siteLang" />
-    <MovieOverviewMobile class="mobile" :movie="movie" />
+    <MovieOverviewMobile class="mobile" :siteLang="siteLang" />
   </div>
 </template>
 <script>
@@ -11,13 +11,6 @@ export default {
     return {
       siteLang: "",
     };
-  },
-  methods: {
-    getMovieFromStore() {
-      this.movie = this.$store.getters["moviesStore/getMovieById"](
-        this.$route.params.id
-      );
-    },
   },
   async create() {
     // Get siteLang

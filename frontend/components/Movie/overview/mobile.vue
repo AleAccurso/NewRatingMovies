@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <!-- <MovieTrailers :videoKeys="movie[siteLang].trailers" /> -->
+    <!-- <MovieTrailers :trailers="movie[siteLang].trailers" /> -->
   </div>
 </template>
 <script>

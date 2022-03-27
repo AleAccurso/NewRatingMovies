@@ -48,7 +48,7 @@ const store = {
 
   actions: {
     async nuxtServerInit({ dispatch, commit }) {
-      await dispatch("moviesStore/getMovies", [0, 1, "min"]);
+      await dispatch("moviesStore/getMovies", [0, 2, "min"]);
 
       // Site language
       if (this.$cookiz.get("siteLang")) {

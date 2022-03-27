@@ -1,6 +1,6 @@
 <template>
-  <div id="movieTrailers" v-if="trailers.length > 0">
-    <h3 class="mt-3">{{ $t("trailers") }}</h3>
+  <div ref="movieTrailers" v-if="trailers.length > 0">
+    <h3 class="ms-3 my-4">{{ $t("trailers") }}</h3>
     <div class="trailers" id="trailers" v-for="trailer in trailers">
       <iframe
         class="p-3 rounded"
@@ -24,14 +24,15 @@ export default {
       height: "",
     };
   },
-  mounted() {
-    let elem = document.getElementById("movieTrailers");
-    let totalWidth = document
-      .getElementById("movieTrailers")
-      .getBoundingClientRect().width;
-
-    this.width = totalWidth / 2;
-    this.height = (this.width * 9) / 16;
+  async mounted() {
+    this.$nextTick(() => {
+      let elem = this.$refs.movieTrailers;
+      if (typeof elem != "undefined") {
+        let totalWidth = elem.getBoundingClientRect().width;
+        this.width = totalWidth / 2;
+        this.height = (this.width * 9) / 16;
+      }
+    });
   },
 };
 </script>
@@ -40,7 +41,7 @@ h3 {
   color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
-  font-size: 25px;
+  font-size: 30px;
 }
 .trailers {
   display: inline-block;

@@ -99,8 +99,8 @@
           </div>
         </div>
       </section>
-      <MovieTrailers :trailers="movie[siteLang].trailers" />
     </div>
+    <MovieTrailers :trailers="movie[siteLang].trailers" />
   </div>
 </template>
 <script>
