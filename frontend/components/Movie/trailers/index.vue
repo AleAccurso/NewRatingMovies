@@ -1,6 +1,6 @@
 <template>
   <div id="movieTrailers" v-if="trailers.length > 0">
-    <h3 class="mt-3">Trailers</h3>
+    <h3 class="mt-3">{{ $t("trailers") }}</h3>
     <div class="trailers" id="trailers" v-for="trailer in trailers">
       <iframe
         class="p-3 rounded"
