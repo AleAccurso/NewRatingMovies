@@ -29,8 +29,13 @@ export default {
       let elem = this.$refs.movieTrailers;
       if (typeof elem != "undefined") {
         let totalWidth = elem.getBoundingClientRect().width;
-        this.width = totalWidth / 3;
-        this.height = (this.width * 9) / 16;
+        if (totalWidth <= 500) {
+          this.width = totalWidth;
+          this.height = (this.width * 9) / 16;
+        } else {
+          this.width = totalWidth / 3;
+          this.height = (this.width * 9) / 16;
+        }
       }
     });
   },

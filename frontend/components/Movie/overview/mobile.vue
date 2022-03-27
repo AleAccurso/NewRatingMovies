@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <!-- <MovieTrailers :trailers="movie[siteLang].trailers" /> -->
+    <MovieTrailers :trailers="movie[siteLang].trailers" />
   </div>
 </template>
 <script>
@@ -147,7 +147,6 @@ img {
   position: absolute;
 }
 .movie {
-  position: relative;
   display: block;
   border: 0;
   border-radius: 10px;
@@ -224,11 +223,5 @@ span {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
   background-color: var(--color-fushia);
-}
-
-@media (min-width: 1025px) {
-  .movie-backdrop {
-    display: none;
-  }
 }
 </style>

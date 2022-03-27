@@ -1,5 +1,5 @@
 <template>
-  <div id="movie" class="d-block">
+  <div class="movieDesktop">
     <div class="movieDescription">
       <!-- Poster -->
       <div id="poster">
@@ -128,6 +128,9 @@ export default {
 };
 </script>
 <style scoped>
+.movieDesktop {
+  display: block;
+}
 .movieDescription {
   width: 70%;
   min-width: 800px;
@@ -234,5 +237,11 @@ table span {
   border-radius: 10px;
   /* background-color: rgba(82,15,73,1); */
   background-color: var(--color-fushia);
+}
+
+@media (max-width: 1024px) {
+  .movieDesktop {
+    display: none;
+  }
 }
 </style>

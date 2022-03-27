@@ -1,8 +1,8 @@
 <template>
   <div class="moviePage">
     <UIBigLogo />
-    <MovieOverviewDesktop class="desktop" :siteLang="siteLang" />
-    <MovieOverviewMobile class="mobile" :siteLang="siteLang" />
+    <MovieOverviewDesktop class="desktop" :siteLang="siteLang" :movie="movie" />
+    <MovieOverviewMobile class="mobile" :siteLang="siteLang" :movie="movie" />
   </div>
 </template>
 <script>
@@ -10,7 +10,15 @@ export default {
   data() {
     return {
       siteLang: "",
+      movie: "",
     };
+  },
+  async beforeCreate() {
+    console.log("requesting data");
+    let getMovie = await this.$store.dispatch(
+      "moviesStore/getMovieById",
+      this.$route.params.id
+    );
   },
   async create() {
     // Get siteLang
@@ -21,17 +29,11 @@ export default {
     }
     this.$i18n.setLocale(this.siteLang);
   },
-  async beforeCreate() {
-    await this.$store.dispatch(
-      "moviesStore/getMovieById",
-      this.$route.params.id
-    );
-  },
 };
 </script>
 <style scoped>
 .desktop {
-  display: flex;
+  display: block;
 }
 .mobile {
   display: none;
@@ -46,7 +48,7 @@ export default {
     display: none;
   }
   .mobile {
-    display: flex;
+    display: block;
   }
 }
 </style>
