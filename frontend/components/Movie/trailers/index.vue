@@ -25,6 +25,7 @@ export default {
     };
   },
   mounted() {
+    let elem = document.getElementById("movieTrailers");
     let totalWidth = document
       .getElementById("movieTrailers")
       .getBoundingClientRect().width;
