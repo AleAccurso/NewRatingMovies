@@ -130,6 +130,7 @@ export default {
 <style scoped>
 .movieDescription {
   width: 70%;
+  min-width: 800px;
   height: auto;
   display: flex;
   background-color: var(--color-purple);
