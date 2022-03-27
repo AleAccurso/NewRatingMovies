@@ -3,7 +3,7 @@
     <div v-if="movies.length > 0">
       <v-container class="d-flex grey lighten-5">
         <v-row no-gutters>
-          <v-col v-for="movie in movies" :key="movie._id">
+          <v-col v-for="movie in movies" :key="movie._id" cols="12" sm="3">
             <nuxt-link
               class="nav-link active"
               aria-current="page"

@@ -176,11 +176,15 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   min-width: 270px;
+  max-width: 315px;
+  width: 100%;
 }
 .imgMovieCard {
   object-fit: cover;
   width: 100%;
   height: auto;
+  display: flex;
+  max-width: 315px;
 }
 .defaultPic {
   object-fit: cover;
