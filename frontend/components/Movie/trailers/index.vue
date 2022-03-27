@@ -29,8 +29,11 @@ export default {
       let elem = this.$refs.movieTrailers;
       if (typeof elem != "undefined") {
         let totalWidth = elem.getBoundingClientRect().width;
-        if (totalWidth <= 500) {
+        if (totalWidth < 500) {
           this.width = totalWidth;
+          this.height = (this.width * 9) / 16;
+        } else if (totalWidth >= 500 && totalWidth < 1024) {
+          this.width = totalWidth / 2;
           this.height = (this.width * 9) / 16;
         } else {
           this.width = totalWidth / 3;

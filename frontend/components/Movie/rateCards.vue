@@ -3,7 +3,7 @@
     <div v-if="movies.length > 0">
       <v-container class="d-flex grey lighten-5">
         <v-row no-gutters>
-          <v-col v-for="movie in movies" :key="movie._id" cols="12" sm="3">
+          <v-col v-for="movie in movies" :key="movie._id">
             <nuxt-link
               class="nav-link active"
               aria-current="page"
@@ -107,13 +107,15 @@ export default {
   border: 0px;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
   min-width: 270px;
+  max-width: 315px;
+  width: 100%;
 }
 .imgMovieCard {
   object-fit: cover;
   width: 100%;
   height: auto;
+  max-width: 315px;
 }
 .v-card__text {
   max-height: 200px;
