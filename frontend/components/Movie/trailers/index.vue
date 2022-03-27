@@ -3,7 +3,7 @@
     <h3 class="ms-3 my-4">{{ $t("trailers") }}</h3>
     <div class="trailers" id="trailers" v-for="trailer in trailers">
       <iframe
-        class="p-3 rounded"
+        class="trailer"
         :src="baseVideoURL + trailer.key"
         :width="width"
         :height="height"
@@ -45,5 +45,10 @@ h3 {
 }
 .trailers {
   display: inline-block;
+}
+.trailer {
+  padding: 10px;
+  border-radius: 25px;
+  overflow: hidden;
 }
 </style>
