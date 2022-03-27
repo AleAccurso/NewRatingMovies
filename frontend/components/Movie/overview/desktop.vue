@@ -1,94 +1,105 @@
 <template>
-  <div class="movieDescription">
-    <!-- Poster -->
-    <div id="poster">
-      <figure>
-        <img
-          v-if="movie[siteLang].poster_path"
-          :srcset="url + movie[siteLang].poster_path"
-        />
-        <div v-else class="defaultPicContainer">
-          <img
-            class="defaultPic"
-            src="~/assets/no_picture.png"
-            alt="default picture"
-          />
-        </div>
-      </figure>
-    </div>
-    <div class="movieDesc">
-      <div class="d-flex justify-content-between align-items-center">
-        <!-- Title -->
-        <div id="title">
-          <span v-if="movie[siteLang].title.length <= 33" class="bigTitle">{{
-            movie[siteLang].title
-          }}</span>
-          <span v-else class="smallTitle">{{ movie[siteLang].title }}</span>
-        </div>
-        <div id="vote">
-          <!-- Vote -->
-          <span v-if="movie.vote_average" class="vote">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              class="bi bi-heart-fill voteIcon"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+  <div class="movie d-block">
+    <div class="movieDescription">
+      <section>
+        <!-- Poster -->
+        <div id="poster">
+          <figure>
+            <img
+              v-if="movie[siteLang].poster_path"
+              :srcset="url + movie[siteLang].poster_path"
+            />
+            <div v-else class="defaultPicContainer">
+              <img
+                class="defaultPic"
+                src="~/assets/no_picture.png"
+                alt="default picture"
               />
-            </svg>
-            {{ movie.vote_average }}
-          </span>
+            </div>
+          </figure>
         </div>
-      </div>
-      <!-- Movie details -->
-      <div class="movieData">
-        <!-- Year -->
-        <div v-if="movie.release_date" class="year">
-          {{ movie.release_date.substring(0, 4) }}
-        </div>
-        <!-- Genres -->
-        <div>
-          <span
-            class="genre"
-            v-if="movie.genre"
-            v-for="movieGenre in movie.genre"
-            >{{ $t(movieGenre) }}</span
-          >
-        </div>
+        <div class="movieText">
+          <div class="movieDesc">
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Title -->
+              <div id="title">
+                <span
+                  v-if="movie[siteLang].title.length <= 33"
+                  class="bigTitle"
+                  >{{ movie[siteLang].title }}</span
+                >
+                <span v-else class="smallTitle">{{
+                  movie[siteLang].title
+                }}</span>
+              </div>
+              <div id="vote">
+                <!-- Vote -->
+                <span v-if="movie.vote_average" class="vote">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-heart-fill voteIcon"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                    />
+                  </svg>
+                  {{ movie.vote_average }}
+                </span>
+              </div>
+            </div>
+            <!-- Movie details -->
+            <div class="movieData">
+              <!-- Year -->
+              <div v-if="movie.release_date" class="year">
+                {{ movie.release_date.substring(0, 4) }}
+              </div>
+              <!-- Genres -->
+              <div>
+                <span
+                  class="genre"
+                  v-if="movie.genre"
+                  v-for="movieGenre in movie.genre"
+                  >{{ $t(movieGenre) }}</span
+                >
+              </div>
 
-        <!-- People -->
-        <div class="people">
-          <table>
-            <tr v-show="movie.director">
-              <td>
-                <span>{{ $t("director") }}</span>
-              </td>
-              <td>
-                <!-- Director -->
-                <div class="casting">{{ movie.director }}</div>
-              </td>
-            </tr>
-            <tr v-if="movie.casting">
-              <td>
-                <span>{{ $t("casting") }}</span>
-              </td>
-              <td>
-                <!-- Actors -->
-                <div class="casting">{{ movie.casting }}</div>
-              </td>
-            </tr>
-          </table>
+              <!-- People -->
+              <div class="people">
+                <table>
+                  <tr v-show="movie.director">
+                    <td>
+                      <span>{{ $t("director") }}</span>
+                    </td>
+                    <td>
+                      <!-- Director -->
+                      <div class="casting">{{ movie.director }}</div>
+                    </td>
+                  </tr>
+                  <tr v-if="movie.casting">
+                    <td>
+                      <span>{{ $t("casting") }}</span>
+                    </td>
+                    <td>
+                      <!-- Actors -->
+                      <div class="casting">{{ movie.casting }}</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!-- Overview -->
+              <div v-if="movie[siteLang].overview" class="overview">
+                {{ movie[siteLang].overview }}
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- Overview -->
-        <div v-if="movie[siteLang].overview" class="overview">
-          {{ movie[siteLang].overview }}
-        </div>
-      </div>
+      </section>
+      <MovieTrailers :trailers="movie[siteLang].trailers" />
     </div>
   </div>
 </template>
@@ -124,7 +135,7 @@ export default {
 .movieDescription {
   width: 70%;
   height: auto;
-  display: flex;
+  display: block;
   background-color: var(--color-purple);
   padding: 20px;
   border-radius: 10px;
@@ -154,18 +165,12 @@ img {
   width: 300px;
   height: auto;
 }
-.poster {
-  width: 350px;
-}
-.trailerIcon {
-  top: 0;
-  left: 0;
-  margin-left: 30px;
-  margin-top: 10px;
+.movieText {
+  display: flex;
+  padding-left: 20px;
 }
 .movieDesc {
   display: block;
-  margin-left: 20px;
 }
 .bigTitle {
   color: var(--color-fushia);

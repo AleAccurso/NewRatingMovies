@@ -63,14 +63,9 @@ const actions = {
   },
 
   async getMovieById({ commit }, id) {
-    console.log("moviesStore - Actions - getMovieById - about to get");
     await this.$axios
       .get(process.env.baseURL + "/movies/" + id)
       .then((response) => {
-        console.log(
-          "moviesStore - actions - getMovieById - movie:",
-          response.data
-        );
         commit("SET_MOVIE", response.data);
       })
       .catch((err) => {

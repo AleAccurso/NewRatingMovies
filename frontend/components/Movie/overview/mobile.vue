@@ -1,7 +1,7 @@
 <template>
   <div class="movie">
     <div class="movieContent">
-      <div id="poster">
+      <div class="poster">
         <figure>
           <!-- Poster -->
           <img
@@ -78,6 +78,7 @@
         </div>
       </div>
     </div>
+    <!-- <MovieTrailers :videoKeys="movie[siteLang].trailers" /> -->
   </div>
 </template>
 <script>
@@ -109,6 +110,9 @@ export default {
 };
 </script>
 <style scoped>
+.poster {
+  border: 0;
+}
 .genre {
   color: #fff;
 }
