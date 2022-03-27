@@ -125,7 +125,7 @@ export default {
     }
     this.$i18n.setLocale(this.siteLang);
 
-    /* Get movie data from store */
+    /* Get movie data */
     let movieToUpdate = this.$store.getters["moviesStore/getMovieById"](
       this.$route.params.id
     );

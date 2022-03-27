@@ -1,134 +1,136 @@
 <template>
-  <transition name="bloc-modal" v-if="revele" id="movieModalDesktop">
-    <div class="modal-backdrop" @click="toggleModal">
-      <div class="modal">
-        <div class="movieDescription" v-if="!showTrailer">
-          <figure>
-            <!-- Poster -->
-            <img
-              v-if="movie[siteLang].poster_path"
-              :srcset="url + movie[siteLang].poster_path"
-            />
-            <div v-else class="defaultPicContainer">
-              <img
-                class="defaultPic"
-                src="~/assets/no_picture.png"
-                alt="default picture"
+  <div class="movieDescription">
+    <!-- Poster -->
+    <div id="poster">
+      <figure>
+        <img
+          v-if="movie[siteLang].poster_path"
+          :srcset="url + movie[siteLang].poster_path"
+        />
+        <div v-else class="defaultPicContainer">
+          <img
+            class="defaultPic"
+            src="~/assets/no_picture.png"
+            alt="default picture"
+          />
+        </div>
+      </figure>
+    </div>
+    <div class="movieDesc">
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- Title -->
+        <div id="title">
+          <span v-if="movie[siteLang].title.length <= 33" class="bigTitle">{{
+            movie[siteLang].title
+          }}</span>
+          <span v-else class="smallTitle">{{ movie[siteLang].title }}</span>
+        </div>
+        <div id="vote">
+          <!-- Vote -->
+          <span v-if="movie.vote_average" class="vote">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-heart-fill voteIcon"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
               />
-            </div>
-            <UITrailerIcon class="trailerIcon" @click="toggleTrailer" />
-          </figure>
-          <div class="movieDesc">
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Title -->
-              <div id="title">
-                <span
-                  v-if="movie[siteLang].title.length <= 33"
-                  class="bigTitle"
-                  >{{ movie[siteLang].title }}</span
-                >
-                <span v-else class="smallTitle">{{
-                  movie[siteLang].title
-                }}</span>
-              </div>
-              <div id="vote">
-                <!-- Vote -->
-                <span v-if="movie.vote_average" class="vote">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-heart-fill voteIcon"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    />
-                  </svg>
-                  {{ movie.vote_average }}
-                </span>
-              </div>
-            </div>
-            <!-- Movie details -->
-            <div class="movieData">
-              <!-- Year -->
-              <div v-if="movie.release_date" class="year">
-                {{ movie.release_date.substring(0, 4) }}
-              </div>
-              <!-- Genres -->
-              <div>
-                <span
-                  class="genre"
-                  v-if="movie.genre"
-                  v-for="movieGenre in movie.genre"
-                  >{{ $t(movieGenre) }}</span
-                >
-              </div>
+            </svg>
+            {{ movie.vote_average }}
+          </span>
+        </div>
+      </div>
+      <!-- Movie details -->
+      <div class="movieData">
+        <!-- Year -->
+        <div v-if="movie.release_date" class="year">
+          {{ movie.release_date.substring(0, 4) }}
+        </div>
+        <!-- Genres -->
+        <div>
+          <span
+            class="genre"
+            v-if="movie.genre"
+            v-for="movieGenre in movie.genre"
+            >{{ $t(movieGenre) }}</span
+          >
+        </div>
 
-              <!-- People -->
-              <div class="people">
-                <table>
-                  <tr v-show="movie.director">
-                    <td>
-                      <span>{{ $t("director") }}</span>
-                    </td>
-                    <td>
-                      <!-- Director -->
-                      <div class="casting">{{ movie.director }}</div>
-                    </td>
-                  </tr>
-                  <tr v-if="movie.casting">
-                    <td>
-                      <span>{{ $t("casting") }}</span>
-                    </td>
-                    <td>
-                      <!-- Actors -->
-                      <div class="casting">{{ movie.casting }}</div>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <!-- Overview -->
-              <div v-if="movie[siteLang].overview" class="overview">
-                {{ movie[siteLang].overview }}
-              </div>
-            </div>
-          </div>
+        <!-- People -->
+        <div class="people">
+          <table>
+            <tr v-show="movie.director">
+              <td>
+                <span>{{ $t("director") }}</span>
+              </td>
+              <td>
+                <!-- Director -->
+                <div class="casting">{{ movie.director }}</div>
+              </td>
+            </tr>
+            <tr v-if="movie.casting">
+              <td>
+                <span>{{ $t("casting") }}</span>
+              </td>
+              <td>
+                <!-- Actors -->
+                <div class="casting">{{ movie.casting }}</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- Overview -->
+        <div v-if="movie[siteLang].overview" class="overview">
+          {{ movie[siteLang].overview }}
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 <script>
 export default {
-  name: "Modal",
-  props: ["movie", "revele", "toggleModal", "siteLang"],
+  name: "MovieOverview",
   data() {
     return {
       url: process.env.apiPicURL,
       baseVideoURL: process.env.VIDEO_URL,
       noPic: "~/assets/no_picture.png",
-      modalMovie: "",
-      showTrailer: false,
-      videoKey: "KokmzxszDow",
+      movie: "",
+      siteLang: "",
     };
   },
-  methods: {
-    close() {
-      this.$emit("close");
-    },
-    toggleTrailer() {
-      this.showTrailer = !this.showTrailer;
-    },
-  },
   created() {
+    // Get movie data
+    this.movie = this.$store.getters["moviesStore/getMovieById"](
+      this.$route.params.id
+    );
+
+    // Get siteLang
+    if (this.$cookiz.get("siteLang")) {
+      this.siteLang = this.$cookiz.get("siteLang");
+    } else {
+      this.siteLang = "fr";
+    }
     this.$i18n.setLocale(this.siteLang);
   },
 };
 </script>
 <style scoped>
+.movieDescription {
+  width: 70%;
+  height: auto;
+  display: flex;
+  background-color: var(--color-purple);
+  padding: 20px;
+  border-radius: 10px;
+  border: 0;
+  margin: 0 auto;
+}
 .genre + .genre::before {
   content: ", ";
 }
@@ -140,7 +142,6 @@ img {
   border: 0;
   border-radius: 10px;
   background-color: whitesmoke;
-  position: relative;
 }
 .defaultPicContainer {
   width: 300px;
@@ -152,35 +153,6 @@ img {
 .defaultPic {
   width: 300px;
   height: auto;
-}
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* cursor: pointer; */
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal {
-  position: relative;
-  width: 900px;
-  height: 490px;
-  display: flex;
-  border: 0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.movieDescription {
-  display: flex;
-  background-color: var(--color-purple);
-  padding: 20px;
-  width: 100%;
 }
 .poster {
   width: 350px;
@@ -271,11 +243,5 @@ table span {
   width: 100%;
   height: 100%;
   max-height: 100%;
-}
-
-@media (max-width: 1024px) {
-  .modal-backdrop {
-    display: none;
-  }
 }
 </style>

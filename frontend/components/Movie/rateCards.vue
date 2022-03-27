@@ -7,7 +7,11 @@
             <nuxt-link
               class="nav-link active"
               aria-current="page"
-              :to="{ name: `movies-id___${siteLang}`, hash: '#logo' }"
+              :to="{
+                name: `movies-id___${siteLang}`,
+                params: { id: movie._id },
+                hash: '#logo',
+              }"
             >
               <div class="card">
                 <v-card>

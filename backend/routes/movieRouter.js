@@ -12,9 +12,9 @@ router
 
 router
   .route("/:id")
-  .get(isAdmin, movieController.getMovieByMovieDBId) // Get a specific movie by movieDbId
-  .patch(isAdmin, movieController.updateMovie) // Update a movie
-  .delete(isAdmin, movieController.deleteMovie); // Delete movie
+  .get(movieController.getMovieById)
+  .patch(isAdmin, movieController.updateMovie)
+  .delete(isAdmin, movieController.deleteMovie);
 
 router.post("/:id/metadata", isAdmin, movieController.updateMetaData); //Change metadata a MKV file on the hard drive
 

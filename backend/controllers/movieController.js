@@ -29,6 +29,7 @@ exports.getMovies = async (req, res, next) => {
         .find()
         .select({
           _id: 1,
+          movieDbId: 1,
           release_date: 1,
           en: {
             title: 1,
@@ -79,18 +80,15 @@ exports.addMovie = async (req, res, next) => {
     .catch((error) => res.status(400).json({ message: error }));
 };
 
-//Get a specific movie by movieDbId
-exports.getMovieByMovieDBId = async (req, res, next) => {
-  const movies = movieModel.findOne(
-    { movieDbId: req.params.id },
-    (err, movies) => {
-      if (err) {
-        res.status(500).send({ message: msg.SERVER_ERROR });
-      } else if (movies) {
-        res.status(200).json(movies);
-      }
+//Get movie by its id
+exports.getMovieById = async (req, res, next) => {
+  const movies = movieModel.findOne({ _id: req.params.id }, (err, movie) => {
+    if (err) {
+      res.status(500).send({ message: msg.SERVER_ERROR });
+    } else if (movies) {
+      res.status(200).json(movie);
     }
-  );
+  });
 };
 
 //Update a movie

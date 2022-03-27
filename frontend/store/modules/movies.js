@@ -12,6 +12,15 @@ const mutations = {
     state.movies = allMovies;
   },
 
+  SET_MOVIE: (state, movie) => {
+    let index = state.movies.findIndex((obj) => obj._id === movie._id);
+    if (index >= 0) {
+      state.movies[index] = movie;
+    } else {
+      state.movies.push(movie);
+    }
+  },
+
   ADD_MOVIE: (state, movie) => {
     state.movies.push(movie);
   },
@@ -50,6 +59,22 @@ const actions = {
       )
       .then((response) => {
         commit("SET_MOVIES", response.data);
+      });
+  },
+
+  async getMovieById({ commit }, id) {
+    console.log("moviesStore - Actions - getMovieById - about to get");
+    await this.$axios
+      .get(process.env.baseURL + "/movies/" + id)
+      .then((response) => {
+        console.log(
+          "moviesStore - actions - getMovieById - movie:",
+          response.data
+        );
+        commit("SET_MOVIE", response.data);
+      })
+      .catch((err) => {
+        this.$toast.error(err);
       });
   },
 
