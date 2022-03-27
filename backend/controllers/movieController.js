@@ -24,6 +24,39 @@ exports.getMovies = async (req, res, next) => {
             res.status(200).json(movies);
           }
         });
+    } else if (data == "admin") {
+      const movies = movieModel
+        .find()
+        .select({
+          release_date: 1,
+          vote_average: 1,
+          director: 1,
+          en: {
+            title: 1,
+            overview: 1,
+          },
+          fr: {
+            title: 1,
+            overview: 1,
+          },
+          it: {
+            title: 1,
+            overview: 1,
+          },
+          nl: {
+            title: 1,
+            overview: 1,
+          },
+        })
+        .skip(pageInt * sizeInt)
+        .limit(sizeInt)
+        .exec((err, movies) => {
+          if (err) {
+            res.status(500).send({ message: msg.SERVER_ERROR });
+          } else if (movies) {
+            res.status(200).json(movies);
+          }
+        });
     } else if (data == "min") {
       const movies = movieModel
         .find()
