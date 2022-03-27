@@ -9,7 +9,14 @@ const state = () => {
 //Mutations
 const mutations = {
   SET_MOVIES: (state, allMovies) => {
-    state.movies = allMovies;
+    allMovies.forEach((movie) => {
+      let index = state.movies.findIndex((obj) => obj._id === movie._id);
+      if (index >= 0) {
+        state.movies[index] = Object.assign(state.movies[index], movie);
+      } else {
+        state.movies.push(movie);
+      }
+    });
   },
 
   SET_MOVIE: (state, movie) => {
@@ -51,11 +58,10 @@ const mutations = {
 
 //Actions
 const actions = {
-  async getMovies({ commit }, [page, rows, data]) {
+  async getMovies({ commit }, [page, size, data]) {
     const response = await this.$axios
       .get(
-        process.env.baseURL +
-          `/movies?page=${page}&size=${4 * rows}&data=${data}`
+        process.env.baseURL + `/movies?page=${page}&size=${size}&data=${data}`
       )
       .then((response) => {
         commit("SET_MOVIES", response.data);
