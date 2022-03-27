@@ -48,7 +48,7 @@ h3 {
 }
 .trailer {
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 20px;
   overflow: hidden;
 }
 </style>
