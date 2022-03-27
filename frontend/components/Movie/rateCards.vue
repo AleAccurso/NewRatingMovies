@@ -108,6 +108,7 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
+  min-width: 270px;
 }
 .imgMovieCard {
   object-fit: cover;
