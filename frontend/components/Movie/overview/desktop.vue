@@ -215,7 +215,7 @@ table span {
   color: var(--color-fushia);
 }
 .overview {
-  height: 265px;
+  height: 260px;
   overflow: auto;
   text-align: justify;
   padding: 0 10px 0 0;
