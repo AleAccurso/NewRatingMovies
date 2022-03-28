@@ -64,7 +64,7 @@
                   />
                 </svg>
               </nuxt-link>
-              <button @click="deleteMovie(movie._id)">
+              <button @click="deleteMovie(movie._id, movies.length)">
                 <svg
                   style="width: 24px; height: 24px; color: #ad0545"
                   viewBox="0 0 24 24"
@@ -102,21 +102,33 @@ export default {
     return {
       baseURL: process.env.baseURL,
       perPage: 5,
+      currentPage: 0,
     };
   },
   methods: {
-    async deleteMovie(id) {
+    async deleteMovie(id, displayedMovies) {
       if (confirm(this.$t("deleteMovieOK"))) {
         await this.$store.dispatch("moviesStore/deleteMovie", id);
+        if (displayedMovies === 1 && this.currentPage > 1) {
+          await this.$store.dispatch("moviesStore/getMovies", [
+            this.currentPage - 1,
+            this.perPage,
+            "admin",
+          ]);
+        } else {
+          this.changePageContent(this.currentPage);
+        }
         this.$toast.success(this.$t("deleteDone"));
       }
     },
     async changePageContent(page) {
+      this.currentPage = page;
       await this.$store.dispatch("moviesStore/getMovies", [
         page - 1,
         this.perPage,
         "admin",
       ]);
+      window.scrollTo({ top: 400 });
     },
   },
   computed: {
