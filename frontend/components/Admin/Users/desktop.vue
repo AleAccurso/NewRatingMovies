@@ -29,7 +29,7 @@
           <td>
             <nuxt-link
               :to="{
-                name: `admin-users-update-id___${locale}`,
+                name: `admin-users-update-id___${siteLang}`,
                 params: { id: user._id },
                 hash: '#logo',
               }"
@@ -69,11 +69,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      locale: "",
-    };
-  },
+  props: ["siteLang"],
   methods: {
     async deleteUser(_id) {
       if (confirm(this.$t("deleteUserOK"))) {
@@ -94,11 +90,7 @@ export default {
       }
     },
   },
-  created() {
-    this.locale = this.$cookiz.get("siteLang");
-    this.$i18n.setLocale(this.locale);
-  },
-  async beforeCreate() {
+  async created() {
     await this.$store.dispatch("usersStore/setUsers");
   },
 };

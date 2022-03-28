@@ -11,6 +11,12 @@ exports.getMovies = async (req, res, next) => {
   sizeInt = parseInt(req.query.size);
   data = req.query.data;
 
+  totalNbMovies = await movieModel.countDocuments({});
+
+  dataToSend = {
+    nbMovies: totalNbMovies,
+  };
+
   if (!isNaN(pageInt) && !isNaN(sizeInt)) {
     if (data == "full") {
       const movies = movieModel
@@ -21,7 +27,8 @@ exports.getMovies = async (req, res, next) => {
           if (err) {
             res.status(500).send({ message: msg.SERVER_ERROR });
           } else if (movies) {
-            res.status(200).json(movies);
+            dataToSend["movies"] = movies;
+            res.status(200).json(dataToSend);
           }
         });
     } else if (data == "admin") {
@@ -54,7 +61,8 @@ exports.getMovies = async (req, res, next) => {
           if (err) {
             res.status(500).send({ message: msg.SERVER_ERROR });
           } else if (movies) {
-            res.status(200).json(movies);
+            dataToSend["movies"] = movies;
+            res.status(200).json(dataToSend);
           }
         });
     } else if (data == "min") {
@@ -87,7 +95,8 @@ exports.getMovies = async (req, res, next) => {
           if (err) {
             res.status(500).send({ message: msg.SERVER_ERROR });
           } else if (movies) {
-            res.status(200).json(movies);
+            dataToSend["movies"] = movies;
+            res.status(200).json(dataToSend);
           }
         });
     } else {

@@ -35,8 +35,8 @@
           <th></th>
         </tr>
       </thead>
-      <tbody v-if="getMovies.length > 0">
-        <tr v-for="movie in getMovies" :key="movie._id">
+      <tbody v-if="movies.length > 0">
+        <tr v-for="movie in movies" :key="movie._id">
           <td>{{ movie[siteLang].title }}</td>
           <td>{{ movie.vote_average }}</td>
           <td class="noWrap">{{ movie.release_date }}</td>
@@ -85,16 +85,23 @@
         </tr>
       </tbody>
     </table>
-    <UIPaginator />
+    <UIPaginator
+      :perPage="perPage"
+      :totalItems="nbMoviesDB"
+      @changePage="changePageContent"
+    />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
+  props: ["siteLang"],
   data() {
     return {
       baseURL: process.env.baseURL,
-      siteLang: "",
+      perPage: 5,
     };
   },
   methods: {
@@ -104,11 +111,16 @@ export default {
         this.$toast.success(this.$t("deleteDone"));
       }
     },
+    async changePageContent(page) {
+      await this.$store.dispatch("moviesStore/getMovies", [
+        page - 1,
+        this.perPage,
+        "admin",
+      ]);
+    },
   },
   computed: {
-    getMovies() {
-      return this.$store.getters["moviesStore/getMovies"];
-    },
+    ...mapState("moviesStore", ["movies", "nbMoviesDB"]),
     roleIsAdmin() {
       if (this.$store.getters.roleIsAdmin === true) {
         return true;
@@ -117,13 +129,12 @@ export default {
       }
     },
   },
-  created() {
-    if (this.$cookiz.get("siteLang")) {
-      this.siteLang = this.$cookiz.get("siteLang");
-    } else {
-      this.siteLang = "fr";
-    }
-    this.$i18n.setLocale(this.siteLang);
+  async created() {
+    await this.$store.dispatch("moviesStore/getMovies", [
+      0,
+      this.perPage,
+      "admin",
+    ]);
   },
 };
 </script>

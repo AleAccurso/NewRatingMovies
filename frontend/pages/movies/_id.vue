@@ -14,7 +14,6 @@ export default {
     };
   },
   async beforeCreate() {
-    console.log("requesting data");
     let getMovie = await this.$store.dispatch(
       "moviesStore/getMovieById",
       this.$route.params.id

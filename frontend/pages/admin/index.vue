@@ -25,12 +25,12 @@
       <v-tabs-items v-model="tab">
         <v-tab-item v-for="item in [$t('users'), $t('movies')]" :key="item">
           <v-card v-if="item === $t('users')" class="tableMain">
-            <AdminUsersDesktop />
-            <AdminUsersMobile />
+            <AdminUsersDesktop :siteLang="language" />
+            <AdminUsersMobile :siteLang="language" />
           </v-card>
           <v-card v-else class="tableMain">
-            <AdminMoviesDesktop />
-            <AdminMoviesMobile />
+            <AdminMoviesDesktop :siteLang="language" />
+            <AdminMoviesMobile :siteLang="language" />
           </v-card>
         </v-tab-item>
         <UIBtnTop :showAt="300" />

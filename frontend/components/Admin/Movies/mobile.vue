@@ -14,8 +14,8 @@
         {{ $t("modifyMetadata") }}
       </nuxt-link>
     </div>
-    <div v-if="getMovies.length > 0">
-      <v-card v-for="movie in getMovies" :key="movie._id">
+    <div v-if="movies.length > 0">
+      <v-card v-for="movie in movies" :key="movie._id">
         <table>
           <tr>
             <td class="infoTitle">{{ $t("title") }}</td>
@@ -79,14 +79,22 @@
       </v-card>
     </div>
     <div v-else align="center">{{ $t("noMovieCatalog") }}</div>
+    <UIPaginator
+      :perPage="perPage"
+      :totalItems="nbMoviesDB"
+      @changePage="changePageContent"
+    />
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
+  props: ["siteLang"],
   data() {
     return {
       baseURL: process.env.baseURL,
-      siteLang: "",
+      perPage: 5,
     };
   },
   methods: {
@@ -96,11 +104,16 @@ export default {
         this.$toast.success(this.$t("deleteDone"));
       }
     },
+    async changePageContent(page) {
+      await this.$store.dispatch("moviesStore/getMovies", [
+        page - 1,
+        this.perPage,
+        "admin",
+      ]);
+    },
   },
   computed: {
-    getMovies() {
-      return this.$store.getters["moviesStore/getMovies"];
-    },
+    ...mapState("moviesStore", ["movies", "nbMoviesDB"]),
     roleIsAdmin() {
       if (this.$store.getters.roleIsAdmin === true) {
         return true;
