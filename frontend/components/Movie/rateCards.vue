@@ -56,6 +56,11 @@
           </v-col>
         </v-row>
       </v-container>
+      <UIPaginator
+        :perPage="perPage"
+        :totalItems="nbMoviesDB"
+        @changePage="changePageContent"
+      />
     </div>
     <div v-else class="noMovieInDB">
       <img src="~/assets/No-Movie.png" alt="no-movie.png" />
@@ -63,8 +68,10 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
-  props: ["movies"],
+  props: ["siteLang"],
   data() {
     return {
       title: "",
@@ -73,17 +80,32 @@ export default {
       fullIcon: "mdi-heart",
       sortBy: "title",
       sortDirection: "asc",
-      siteLang: "",
       myRates: [],
       myFavorites: [],
+      perPage: 8,
+      currentPage: 1,
     };
   },
   computed: {
+    ...mapState("moviesStore", ["movies", "nbMoviesDB"]),
     isAuthenticated() {
       return this.$store.getters.isAuthenticated; // it check if user isAuthenticated
     },
   },
-  created() {
+  methods: {
+    async changePageContent(page) {
+      this.currentPage = page;
+      await this.$store.dispatch("moviesStore/getMovies", [
+        page - 1,
+        this.perPage,
+        "admin",
+      ]);
+      window.scrollTo({ top: 400 });
+    },
+  },
+  async created() {
+    await this.$store.dispatch("moviesStore/getMovies", [0, 8, "min"]);
+
     if (this.$store.getters.getUserInfo) {
       this.myRates = this.$store.getters.getUserInfo.myRates;
     }
@@ -91,13 +113,6 @@ export default {
     if (this.$store.getters.getUserInfo) {
       this.myFavorites = this.$store.getters.getUserInfo.myFavorites;
     }
-
-    if (this.$cookiz.get("siteLang")) {
-      this.siteLang = this.$cookiz.get("siteLang");
-    } else {
-      this.siteLang = "fr";
-    }
-    this.$i18n.setLocale(this.siteLang);
   },
 };
 </script>

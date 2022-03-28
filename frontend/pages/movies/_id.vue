@@ -1,8 +1,8 @@
 <template>
   <div class="moviePage">
     <UIBigLogo />
-    <MovieOverviewDesktop class="desktop" :siteLang="siteLang" :movie="movie" />
-    <MovieOverviewMobile class="mobile" :siteLang="siteLang" :movie="movie" />
+    <MovieOverviewDesktop class="desktop" :siteLang="siteLang" />
+    <MovieOverviewMobile class="mobile" :siteLang="siteLang" />
   </div>
 </template>
 <script>
@@ -13,13 +13,7 @@ export default {
       movie: "",
     };
   },
-  async beforeCreate() {
-    let getMovie = await this.$store.dispatch(
-      "moviesStore/getMovieById",
-      this.$route.params.id
-    );
-  },
-  async create() {
+  async created() {
     // Get siteLang
     if (this.$cookiz.get("siteLang")) {
       this.siteLang = this.$cookiz.get("siteLang");

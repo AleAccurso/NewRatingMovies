@@ -5,8 +5,8 @@
       <div id="poster">
         <figure>
           <img
-            v-if="movie[siteLang].poster_path"
-            :srcset="url + movie[siteLang].poster_path"
+            v-if="result[0][siteLang].poster_path"
+            :srcset="url + result[0][siteLang].poster_path"
           />
           <div v-else class="defaultPicContainer">
             <img
@@ -23,15 +23,17 @@
             <!-- Title -->
             <div id="title">
               <span
-                v-if="movie[siteLang].title.length <= 33"
+                v-if="result[0][siteLang].title.length <= 33"
                 class="bigTitle"
-                >{{ movie[siteLang].title }}</span
+                >{{ result[0][siteLang].title }}</span
               >
-              <span v-else class="smallTitle">{{ movie[siteLang].title }}</span>
+              <span v-else class="smallTitle">{{
+                result[0][siteLang].title
+              }}</span>
             </div>
             <div id="vote">
               <!-- Vote -->
-              <span v-if="movie.vote_average" class="vote">
+              <span v-if="result[0].vote_average" class="vote">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -45,22 +47,22 @@
                     d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                   />
                 </svg>
-                {{ movie.vote_average }}
+                {{ result[0].vote_average }}
               </span>
             </div>
           </div>
           <!-- Movie details -->
           <div class="movieData">
             <!-- Year -->
-            <div v-if="movie.release_date" class="year">
-              {{ movie.release_date.substring(0, 4) }}
+            <div v-if="result[0].release_date" class="year">
+              {{ result[0].release_date.substring(0, 4) }}
             </div>
             <!-- Genres -->
             <div>
               <span
                 class="genre"
-                v-if="movie.genre"
-                v-for="movieGenre in movie.genre"
+                v-if="result[0].genre"
+                v-for="movieGenre in result[0].genre"
                 >{{ $t(movieGenre) }}</span
               >
             </div>
@@ -68,62 +70,58 @@
             <!-- People -->
             <div class="people">
               <table>
-                <tr v-show="movie.director">
+                <tr v-show="result[0].director">
                   <td>
                     <span>{{ $t("director") }}</span>
                   </td>
                   <td>
                     <!-- Director -->
-                    <div class="casting">{{ movie.director }}</div>
+                    <div class="casting">{{ result[0].director }}</div>
                   </td>
                 </tr>
-                <tr v-if="movie.casting">
+                <tr v-if="result[0].casting">
                   <td>
                     <span>{{ $t("casting") }}</span>
                   </td>
                   <td>
                     <!-- Actors -->
-                    <div class="casting">{{ movie.casting }}</div>
+                    <div class="casting">{{ result[0].casting }}</div>
                   </td>
                 </tr>
               </table>
             </div>
             <!-- Overview -->
-            <div v-if="movie[siteLang].overview" class="overview">
-              {{ movie[siteLang].overview }}
+            <div v-if="result[0][siteLang].overview" class="overview">
+              {{ result[0][siteLang].overview }}
             </div>
           </div>
         </div>
       </div>
     </div>
-    <MovieTrailers :trailers="movie[siteLang].trailers" />
+    <MovieTrailers :trailers="result[0][siteLang].trailers" />
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MovieOverview",
+  props: ["siteLang"],
   data() {
     return {
       url: process.env.apiPicURL,
       baseVideoURL: process.env.VIDEO_URL,
       noPic: "~/assets/no_picture.png",
-      movie: "",
-      siteLang: "",
     };
   },
-  created() {
-    // Get movie data
-    this.movie = this.$store.getters["moviesStore/getMovieById"](
+  computed: {
+    ...mapState("moviesStore", ["result"]),
+  },
+  async created() {
+    await this.$store.dispatch(
+      "moviesStore/getMovieById",
       this.$route.params.id
     );
-
-    // Get siteLang
-    if (this.$cookiz.get("siteLang")) {
-      this.siteLang = this.$cookiz.get("siteLang");
-    } else {
-      this.siteLang = "fr";
-    }
-    this.$i18n.setLocale(this.siteLang);
   },
 };
 </script>

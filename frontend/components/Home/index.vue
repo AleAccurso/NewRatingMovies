@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <UIBigLogo />
-    <MovieRateCards :movies="getMovies" />
+    <MovieRateCards :siteLang="siteLang" />
     <UIBtnTop :showAt="300" />
   </div>
 </template>
@@ -12,14 +12,7 @@ export default {
       siteLang: "",
     };
   },
-  computed: {
-    getMovies() {
-      return this.$store.getters["moviesStore/getMovies"];
-    },
-  },
   async created() {
-    await this.$store.dispatch("moviesStore/getMovies", [0, 8, "min"]);
-
     // Get siteLang
     if (this.$cookiz.get("siteLang")) {
       this.siteLang = this.$cookiz.get("siteLang");

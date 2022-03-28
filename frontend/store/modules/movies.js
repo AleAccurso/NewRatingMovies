@@ -2,7 +2,7 @@
 const state = () => {
   return {
     movies: [], // For results coming from DB
-    result: [], // For search results from API
+    result: [], // For search results from API and getMovieById
     nbMoviesDB: 0, // Total number of movies in DB
   };
 };
@@ -72,7 +72,7 @@ const actions = {
     await this.$axios
       .get(process.env.baseURL + "/movies/" + id)
       .then((response) => {
-        commit("SET_MOVIE", response.data);
+        commit("SET_RESULT", response.data);
       })
       .catch((err) => {
         this.$toast.error(err);
