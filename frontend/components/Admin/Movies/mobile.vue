@@ -95,7 +95,7 @@ export default {
     return {
       baseURL: process.env.baseURL,
       perPage: 5,
-      currentPage: 0,
+      currentPage: 1,
     };
   },
   methods: {
