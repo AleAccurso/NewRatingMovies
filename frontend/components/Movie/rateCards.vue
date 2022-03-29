@@ -98,7 +98,7 @@ export default {
       await this.$store.dispatch("moviesStore/getMovies", [
         page - 1,
         this.perPage,
-        "admin",
+        "min",
       ]);
       window.scrollTo({ top: 400 });
     },
