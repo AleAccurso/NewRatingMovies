@@ -5,7 +5,7 @@
       <span id="nickname">{{ $t("welcome") }} {{ loggedUser.nickname }}</span>
       <nuxt-link
         :to="{
-          name: `myprofile-update-id___${locale}`,
+          name: `users-myprofile-id___${locale}`,
           params: { id: loggedUser.id },
           hash: '#logo',
         }"
@@ -93,6 +93,7 @@
 
 <script>
 export default {
+  middleware: "isAuthenticated", // it will use `isAuthenticated` middleware
   data() {
     return {
       locale: "",

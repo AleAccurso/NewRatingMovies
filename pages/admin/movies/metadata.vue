@@ -32,7 +32,7 @@
       </v-container>
     </v-container>
     <div v-if="this.results !== ''">
-      <MovieBtnCard
+      <MovieBtnCards
         :btnTxt="this.btnTxt"
         :fileToModify="this.file"
         :filePath="this.path"

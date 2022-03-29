@@ -1,19 +1,25 @@
 <template>
-  <div id="homeComp">
+  <div id="home">
     <UIBigLogo />
-    <MovieRateCard :movies="getMovies"/>
+    <MovieRateCards :siteLang="siteLang" />
     <UIBtnTop :showAt="300" />
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-
 export default {
-  computed: {
-    getMovies(){
-      return this.$store.getters['moviesStore/getMovies'];
-    }
+  data() {
+    return {
+      siteLang: "",
+    };
   },
-}
+  async created() {
+    // Get siteLang
+    if (this.$cookiz.get("siteLang")) {
+      this.siteLang = this.$cookiz.get("siteLang");
+    } else {
+      this.siteLang = "fr";
+    }
+    this.$i18n.setLocale(this.siteLang);
+  },
+};
 </script>
-

@@ -65,18 +65,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <MovieModalDescMobile
-      :revele="revele"
-      :toggleModal="toggleModal"
-      :movie="movieForModal"
-      :siteLang="siteLang"
-    />
-    <MovieModalDescDesktop
-      :revele="revele"
-      :toggleModal="toggleModal"
-      :movie="movieForModal"
-      :siteLang="siteLang"
-    />
   </div>
 </template>
 
@@ -98,8 +86,6 @@ export default {
       overview: "",
       strGenre: "",
       url: process.env.apiPicURL,
-      movieForModal: "",
-      revele: false,
       baseURL: process.env.baseURL,
       siteLang: "",
     };
@@ -120,7 +106,7 @@ export default {
     },
     async getInfo(filePath, fileToModify, movie) {
       const response = await axios
-        .post(this.baseURL + "/movies/" + movie.id + "/getInfo")
+        .post(this.baseURL + "/the-movie-db/" + movie.id + "/getInfo")
         .then(async (response) => {
           this.selectedMovie = await response.data;
           if (filePath === null) {
@@ -167,11 +153,6 @@ export default {
       await this.$store.dispatch("moviesStore/addMovie", this.selectedMovie);
       this.$toast.success(this.$t("addDone"));
     },
-
-    toggleModal(movie) {
-      this.revele = !this.revele;
-      this.movieForModal = movie;
-    },
   },
   created() {
     if (this.$cookiz.get("siteLang")) {
@@ -194,11 +175,16 @@ export default {
   border: 0px;
   border-radius: 10px;
   overflow: hidden;
+  min-width: 270px;
+  max-width: 315px;
+  width: 100%;
 }
 .imgMovieCard {
   object-fit: cover;
   width: 100%;
   height: auto;
+  display: flex;
+  max-width: 315px;
 }
 .defaultPic {
   object-fit: cover;
@@ -212,7 +198,7 @@ export default {
 }
 .v-card__title {
   padding: 10px 10px 0 10px;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-family: "Ubuntu", sans-serif;
   font-weight: 600;
 }
@@ -220,7 +206,7 @@ export default {
   padding: 0 0 0 6px;
   font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
 .v-card__actions {
@@ -229,7 +215,7 @@ export default {
 .v-card__actions button {
   margin: 0 auto 10px auto;
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-fushia);
   font-family: "Lato", sans-serif;
   font-weight: 500;
   font-size: 17px;

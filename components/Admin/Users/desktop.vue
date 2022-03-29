@@ -4,10 +4,10 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">{{ $t('nickname') }}</th>
-          <th scope="col">{{ $t('emailAddress') }}</th>
-          <th scope="col">{{ $t('language') }}</th>
-          <th scope="col">{{ $t('admin') }}</th>
+          <th scope="col">{{ $t("nickname") }}</th>
+          <th scope="col">{{ $t("emailAddress") }}</th>
+          <th scope="col">{{ $t("language") }}</th>
+          <th scope="col">{{ $t("admin") }}</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -16,16 +16,20 @@
           <td>{{ user._id }}</td>
           <td>{{ user.nickname }}</td>
           <td>{{ user.email }}</td>
-          <td v-if="user.language === 'fr'">{{ $t('french') }}</td>
-          <td v-if="user.language === 'en'">{{ $t('english') }}</td>
-          <td v-if="user.language === 'nl'">{{ $t('dutch') }}</td>
-          <td v-if="user.language === 'it'">{{ $t('italian') }}</td>
-          <td v-if="user.isAdmin"><img class="true" src="@/assets/true.png" alt="true.png"></td>
-          <td v-else><img class="false" src="@/assets/false.png" alt="true.png"></td>
+          <td v-if="user.language === 'fr'">{{ $t("french") }}</td>
+          <td v-if="user.language === 'en'">{{ $t("english") }}</td>
+          <td v-if="user.language === 'nl'">{{ $t("dutch") }}</td>
+          <td v-if="user.language === 'it'">{{ $t("italian") }}</td>
+          <td v-if="user.isAdmin">
+            <img class="true" src="@/assets/true.png" alt="true.png" />
+          </td>
+          <td v-else>
+            <img class="false" src="@/assets/false.png" alt="true.png" />
+          </td>
           <td>
             <nuxt-link
               :to="{
-                name: `admin-users-update-id___${locale}`,
+                name: `admin-users-update-id___${siteLang}`,
                 params: { id: user._id },
                 hash: '#logo',
               }"
@@ -56,7 +60,7 @@
       </tbody>
       <tbody v-else>
         <tr>
-            <td align="center" colspan="6">{{ $t('noUserInDB') }}</td>
+          <td align="center" colspan="6">{{ $t("noUserInDB") }}</td>
         </tr>
       </tbody>
     </table>
@@ -65,71 +69,62 @@
 
 <script>
 export default {
-  data(){
-    return{
-      locale: ''
-    }
-  },
+  props: ["siteLang"],
   methods: {
     async deleteUser(_id) {
-      if(confirm(this.$t('deleteUserOK'))){
-        await this.$store.dispatch('usersStore/deleteUser', _id);
+      if (confirm(this.$t("deleteUserOK"))) {
+        await this.$store.dispatch("usersStore/deleteUser", _id);
         this.$toast.success(this.$t("deleteDone"));
       }
-    }
+    },
   },
   computed: {
-    allUsers(){
-      return this.$store.getters['usersStore/getUsers'];
+    allUsers() {
+      return this.$store.getters["usersStore/getUsers"];
     },
-    roleIsAdmin(){
-      if (this.$store.getters.roleIsAdmin === true){
+    roleIsAdmin() {
+      if (this.$store.getters.roleIsAdmin === true) {
         return true;
+      } else {
+        this.$router.push("/");
       }
-      else{
-        this.$router.push('/')
-      }
-    }
+    },
   },
-  created(){
-    this.locale = this.$cookiz.get('siteLang');
-    this.$i18n.setLocale(this.locale);
+  async created() {
+    await this.$store.dispatch("usersStore/setUsers");
   },
-  async beforeCreate() {
-    await this.$store.dispatch('usersStore/setUsers');
-  },
-}
+};
 </script>
 
 <style scoped>
-#adminUsersDesktop{
+#adminUsersDesktop {
   display: block;
 }
-th{
+th {
   text-align: left;
 }
 tr {
   font-family: "Lato", sans-serif;
   font-weight: 600;
-  color: #9042b4;
+  color: var(--color-fushia);
   font-size: 17px;
 }
 td {
   color: #fff;
 }
-.true{
+.true {
   height: 20px;
   width: auto;
   margin-left: 20px;
 }
-.false{
+.false {
   height: 18px;
   width: auto;
   margin-left: 20px;
 }
 
-@media(max-width: 1024px){
-  #adminUsersDesktop{
+@media (max-width: 1024px) {
+  #adminUsersDesktop {
     display: none;
   }
 }

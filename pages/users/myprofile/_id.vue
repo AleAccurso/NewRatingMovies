@@ -3,7 +3,7 @@
     <UIBigLogo />
     <v-container class="grey lighten-5 square">
       <!-- Back button -->
-      <UIBackBtn :path="'myprofile'" />
+      <UIBackBtn :path="'users-myprofile'" />
       <!-- Page logo and title -->
       <div class="pageLogoTitle">
         <svg style="width: 65px; height: 65px" viewBox="0 0 24 24">
@@ -231,7 +231,7 @@ export default {
 }
 .confirmButton {
   color: #fff;
-  background-color: #a52199;
+  background-color: var(--color-rose);
   font-family: "Lato", sans-serif;
   margin-top: 10px;
   font-weight: 500;
